@@ -10,7 +10,7 @@ async function main() {
   const model = vm.runInNewContext(fs.readFileSync(path.join(root, 'waarden.js'), 'utf8') + fs.readFileSync(path.join(root, 'normen.js'), 'utf8') + ';({values:VALUE_TRADEOFFS,norms:NORMS,links:NORM_LINKS,positions:VALUE_POSITIONS})');
   assert.equal(model.values.length, 8);
   assert.equal(model.norms.length, 4);
-  assert.deepEqual(Array.from(model.positions), [-3, -2, -1, 1, 2, 3]);
+  assert.deepEqual(Array.from(model.positions), [-2, -1, 1, 2]);
   for (const item of model.values) for (const side of ['left', 'right']) {
     const links = model.links[item.id][side];
     assert.ok(links.length);
@@ -43,12 +43,13 @@ async function main() {
     assert.equal(await page.evaluate(() => getNormProfile().every((norm) => norm.points === 0 && norm.open > 0)), true);
     await page.locator('#valueSlider').focus();
     await page.locator('#valueSlider').press('Home');
-    assert.equal(await page.evaluate(() => state.valueChoices.eenvoud), -3);
-    await page.locator('#valueSlider').press('ArrowRight');
+    assert.equal(await page.evaluate(() => state.valueChoices.eenvoud), -2);
     await page.locator('#valueSlider').press('ArrowRight');
     assert.equal(await page.evaluate(() => state.valueChoices.eenvoud), -1);
     await page.locator('#valueSlider').press('ArrowRight');
     assert.equal(await page.evaluate(() => state.valueChoices.eenvoud), 1);
+    assert.equal(await page.locator('#currentNorms').count(), 0);
+    assert.doesNotMatch(await page.locator('[data-phase="values"]').textContent(), /Extra ontwerpaandacht|\+1|\+2/);
     const note = 'Meer hulp | minder stappen\n<img src=x onerror=alert(1)> **reden**';
     await page.locator('#valueNote').fill(note);
     await page.locator('[data-open-knowledge]').click();
@@ -89,7 +90,7 @@ async function main() {
     const download = await downloadPromise;
     const markdown = fs.readFileSync(await download.path(), 'utf8');
     assert.match(markdown, /Aandachtsprofiel/);
-    assert.match(markdown, /aandachtsprofiel-1/);
+    assert.match(markdown, /aandachtsprofiel-2/);
     assert.match(markdown, /Bestaande oplossing aanpassen/);
     assert.match(markdown, /&lt;img/);
     assert.match(markdown, /hulp \\\| minder stappen/);
@@ -108,7 +109,7 @@ async function main() {
     await page.locator('#clearValue').click();
     assert.equal(await page.evaluate(() => state.valueChoices.eenvoud), undefined);
     await page.locator('#valueSlider').click();
-    assert.ok([-3, -2, -1, 1, 2, 3].includes(await page.evaluate(() => state.valueChoices.eenvoud)));
+    assert.ok([-2, -1, 1, 2].includes(await page.evaluate(() => state.valueChoices.eenvoud)));
     await page.goto(url + '#waarde-macht');
     assert.equal(await page.locator('#knowledge').isVisible(), true);
     assert.equal(await page.locator('#waarde-macht').isVisible(), true);
@@ -121,8 +122,24 @@ async function main() {
     assert.equal(await page.evaluate(() => state.phase), 'values');
     assert.equal(await page.evaluate(() => Object.keys(state.valueChoices).length), 0);
     assert.equal(await page.evaluate(() => state.euAnswers.data), 'personal');
+    // Preserve old light/strong answers; the removed intermediate option must be reconsidered.
+    await page.evaluate(() => localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      view: 'tool', phase: 'values', scoringVersion: 'aandachtsprofiel-1',
+      valueChoices: { eenvoud: -3, gelijkheid: 1, meten: -2, kosten: 3 },
+      valueNotes: { meten: 'Deze toelichting moet blijven.' }
+    })));
+    await page.reload();
+    assert.deepEqual(await page.evaluate(() => state.valueChoices), { eenvoud: -2, gelijkheid: 1, kosten: 2 });
+    assert.deepEqual(await page.evaluate(() => state.valueReview), ['meten']);
+    assert.equal(await page.locator('#valuesMigration').isVisible(), true);
+    await page.locator('[data-value-index="2"]').click();
+    assert.equal(await page.locator('#valueNote').inputValue(), 'Deze toelichting moet blijven.');
+    await page.locator('#valueSlider').press('End');
+    assert.equal(await page.locator('#valuesMigration').isVisible(), false);
+    await page.reload();
+    assert.equal(await page.evaluate(() => state.valueChoices.meten), 2);
     assert.deepEqual(errors, []);
-    console.log('Geslaagd: zes standen, 48 puntenscenario’s, opslag, terugkeer kennisbank, verslag, migratie en mobiele weergave.');
+    console.log('Geslaagd: vier standen, 32 puntenscenario’s, verborgen invulpunten, opslag, kennisbank, verslag, migratie en mobiele weergave.');
   } finally {
     if (browser) await browser.close();
     await new Promise((resolve) => server.close(resolve));

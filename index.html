@@ -38,8 +38,8 @@
             <p class="kicker">Proefversie voor publieke organisaties en dienstverleners</p>
             <h1 id="homeTitle">Menselijke Maat AI Verkenner</h1>
             <p>
-              Een interactieve routeplanner plus onderzoekswerkbank om AI-toepassingen in de sociale zekerheid te
-              toetsen op menselijke maat, EU-verantwoordelijkheid en uitvoerbaarheid in de praktijk.
+              Verken en evalueer AI-toepassingen op menselijke maat, wettelijke kaders en uitvoerbaarheid.
+              Gebruik de verkenner bij het ontwikkelen of inkopen van AI, bij een aanbesteding en bij de evaluatie van een toepassing die al in gebruik is.
             </p>
 
             <div class="hero-buttons" aria-label="Snelkeuzes">
@@ -59,6 +59,7 @@
         <section class="how-section" aria-labelledby="howTitle">
           <h2 id="howTitle">Hoe werkt het?</h2>
           <p>De verkenner bestaat uit een beslisboom en een kennisbank. In de beslisboom verken je wettelijke kaders en waardenafwegingen. De kennisbank helpt je om die afwegingen op jouw situatie toe te passen, ook als je zelfstandig met AI experimenteert.</p>
+          <p>Bij inkoop of een aanbesteding helpt de verkenner om eisen en vragen aan leveranciers te formuleren en voorgestelde oplossingen te bespreken. Bij evaluatie gebruik je dezelfde vragen om ervaringen met een bestaande toepassing te bespreken en verbeteringen af te spreken.</p>
           <div class="how-cards">
             <article class="how-card">
               <img src="assets/step-thinking.png" alt="" />
@@ -137,11 +138,12 @@
                 <div>
                   <p class="kicker">Stap 2 van 5</p>
                   <h2 id="valuesTitle">Welke waarden geef je voorrang?</h2>
-                  <p>Verken acht afwegingen, één voor één. Verschuif de knop naar de kant die in jouw situatie voorrang krijgt: een beetje, duidelijk of sterk. Er is geen middenstand.</p>
+                  <p>Verken acht afwegingen, één voor één. Kies aan welke kant je voorkeur ligt en of die licht of sterk is. Er is geen middenstand.</p>
                 </div>
                 <span class="score-badge" id="valuesProgress">0/8</span>
               </div>
-              <p class="values-intro">Je keuzes leveren aandachtspunten op bij de vier normen voor menselijke maat. Zo zie je welke ontwerpmaatregelen extra aandacht vragen. Wettelijke verplichtingen blijven het uitgangspunt.</p>
+              <p class="values-intro">Verken wat je keuzes betekenen voor mensen en voor de uitvoering. Het rapport brengt de afwegingen en mogelijke vervolgstappen samen. Wettelijke verplichtingen blijven het uitgangspunt.</p>
+              <p id="valuesMigration" class="phase-note" hidden></p>
               <nav id="valueNavigation" class="chip-row" aria-label="Kies een afweging"></nav>
               <div id="valueCard" class="value-card"></div>
               <p id="valuesSummary" class="phase-note" aria-live="polite"></p>
@@ -186,9 +188,18 @@
                 <div>
                   <p class="kicker">Stap 4 van 5</p>
                   <h2 id="citizenTitle">Korte vragenlijst burgerperspectief</h2>
-                  <p>Gebruik dit als gespreksleidraad of korte toets van het bestaande proces.</p>
+                  <p>Deze vragen helpen om vanuit burgers te kijken naar de dienstverlening: is die begrijpelijk, bereikbaar en eerlijk, en hoeveel moeite kost het om iets te regelen?</p>
                 </div>
                 <span class="score-badge" id="surveyScore">Nog open</span>
+              </div>
+              <div class="survey-guide">
+                <h3>Zo gebruik je deze vragen</h3>
+                <ol>
+                  <li>Kies één concrete situatie, zoals een aanvraag, een AI-advies of een ontvangen besluit. Laat iemand de route doorlopen en bespreek de vier uitspraken hieronder.</li>
+                  <li>Doe dit bij voorkeur met burgers die de dienstverlening gebruiken. Vraag wat zij ervaren en om een voorbeeld: wat gaat goed, waar lopen zij vast en welke hulp hebben zij nodig?</li>
+                  <li>Vul op basis van dat gesprek per uitspraak in wat goed, deels of nog niet geregeld is. Gebruik de uitkomst om verbeteringen te bespreken en herhaal de vragen na een aanpassing.</li>
+                </ol>
+                <p>Bij inkoop of een aanbesteding kun je de vragen gebruiken bij een demonstratie of proef met een leverancier. Bij een bestaande toepassing bespreek je echte gebruikservaringen. Vul je dit voorlopig alleen met collega's in, behandel de antwoorden dan als aannames die je nog met burgers moet toetsen. De uitkomst is een gespreksstart, geen representatief burgeronderzoek.</p>
               </div>
               <div id="surveyGrid" class="question-list"></div>
 

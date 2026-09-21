@@ -2,12 +2,12 @@
 
 [Open de website](https://tjebbehb.github.io/menselijke-maat/)
 
-Een beslisboom en kennisbank voor het bespreken van AI in publieke dienstverlening. Gebaseerd op de openbare [GAK-proefversie van Digicampus](https://github.com/digicampus-prototypes/GAK), met een uitgewerkte waardenafweging en verbinding met de waardenhiërarchie uit het aangeleverde tussentijdsrapport (hoofdstukken 3 en 4).
+Een beslisboom en kennisbank voor het bespreken en evalueren van AI in publieke dienstverlening: bij ontwikkeling, inkoop, aanbesteding en gebruik. Gebaseerd op de openbare [GAK-proefversie van Digicampus](https://github.com/digicampus-prototypes/GAK), met een uitgewerkte waardenafweging en verbinding met de waardenhiërarchie uit het aangeleverde tussentijdsrapport (hoofdstukken 3 en 4).
 
 ## Wat is nieuw?
 
-- Stap 2 bevat acht afwegingen met schuifregelaars met zes standen, zonder middenstand.
-- Lichte, duidelijke en sterke voorkeuren geven 1, 2 en 3 aandachtspunten aan de normen die bij die kant extra ontwerpaandacht vragen.
+- Stap 2 bevat acht afwegingen met vier schuifstanden: sterk links, licht links, licht rechts en sterk rechts, zonder middenstand.
+- Achter de schermen geven lichte en sterke voorkeuren 1 en 2 aandachtspunten aan de gekoppelde normen. De punten verschijnen alleen in het rapport.
 - Het rapport verbindt de vier normen aan concrete ontwerpmaatregelen en toont waar de punten vandaan komen.
 - Dit profiel is een redactioneel hulpmiddel, geen gevalideerde meting of totaalcijfer voor de menselijke maat. Open vragen blijven zichtbaar; tegengestelde voorkeuren heffen elkaars aandachtspunten niet op.
 - Bij publiek/privaat beheer staat de uitvoering (zelf bouwen, aanpassen, inkopen) apart van de regievraag.
@@ -35,7 +35,7 @@ npx playwright install chromium
 npm test
 ```
 
-De tests controleren alle 48 combinaties van afweging en schuifstand, toetsenbordbediening, opslag, kennisbanknavigatie, verslag, migratie en de mobiele weergave. Op macOS gebruiken ze een aanwezige Chrome-installatie; elders de geïnstalleerde Playwright-browser.
+De tests controleren alle 32 combinaties van afweging en schuifstand, toetsenbordbediening, opslag, kennisbanknavigatie, verslag, migratie en de mobiele weergave. Op macOS gebruiken ze een aanwezige Chrome-installatie; elders de geïnstalleerde Playwright-browser.
 
 ## Publicatie
 

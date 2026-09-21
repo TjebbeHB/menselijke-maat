@@ -220,6 +220,7 @@ function defaultState() {
     valueIndex: 0,
     valueChoices: {},
     valueNotes: {},
+    valueReview: [],
     scoringVersion: SCORING_VERSION,
     deliveryMode: "",
     selectedVignette: VIGNETTES[0].id,
@@ -237,9 +238,14 @@ function loadState() {
     next.valueIndex = Number.isInteger(next.valueIndex) ? Math.max(0, Math.min(VALUE_TRADEOFFS.length - 1, next.valueIndex)) : 0;
     next.valueChoices = {};
     next.valueNotes = {};
+    next.valueReview = Array.isArray(saved.valueReview) ? saved.valueReview.filter((id) => VALUE_TRADEOFFS.some((item) => item.id === id)) : [];
     VALUE_TRADEOFFS.forEach((item) => {
       const choice = saved.valueChoices?.[item.id];
       if (saved.scoringVersion === SCORING_VERSION && VALUE_POSITIONS.includes(choice)) next.valueChoices[item.id] = choice;
+      if (saved.scoringVersion === "aandachtsprofiel-1") {
+        if ([-3, -1, 1, 3].includes(choice)) next.valueChoices[item.id] = Math.sign(choice) * (Math.abs(choice) === 3 ? 2 : 1);
+        if ([-2, 2].includes(choice) && !next.valueReview.includes(item.id)) next.valueReview.push(item.id);
+      }
       next.valueNotes[item.id] = typeof saved.valueNotes?.[item.id] === "string" ? saved.valueNotes[item.id] : "";
     });
     next.scoringVersion = SCORING_VERSION;
@@ -425,7 +431,7 @@ function escapeHtml(value) {
 function valueLabel(item) {
   const choice = state.valueChoices[item.id];
   if (!VALUE_POSITIONS.includes(choice)) return "Nog open";
-  const strength = ["", "Lichte", "Duidelijke", "Sterke"][Math.abs(choice)];
+  const strength = ["", "Lichte", "Sterke"][Math.abs(choice)];
   return `${strength} voorkeur voor ${(choice < 0 ? item.left : item.right).toLowerCase()}`;
 }
 
@@ -446,14 +452,8 @@ function getNormProfile() {
     const relevant = VALUE_TRADEOFFS.filter((item) => [...NORM_LINKS[item.id].left, ...NORM_LINKS[item.id].right].some((link) => link.norm === norm.id));
     const contributions = VALUE_TRADEOFFS.flatMap(normContributions).filter((entry) => entry.norm === norm.id);
     const answered = relevant.filter((item) => VALUE_POSITIONS.includes(state.valueChoices[item.id])).length;
-    return { ...norm, contributions, points: contributions.reduce((sum, entry) => sum + entry.points, 0), maximum: relevant.length * 3, open: relevant.length - answered };
+    return { ...norm, contributions, points: contributions.reduce((sum, entry) => sum + entry.points, 0), maximum: relevant.length * 2, open: relevant.length - answered };
   });
-}
-
-function currentNormHtml(item) {
-  const contributions = normContributions(item);
-  if (!contributions.length) return "";
-  return `<p><strong>Extra ontwerpaandacht:</strong> ${contributions.map((entry) => `${escapeHtml(NORMS.find((norm) => norm.id === entry.norm).title)} (+${entry.points})`).join(" · ")}</p><p class="muted-note">${Math.abs(state.valueChoices[item.id])} punt(en) per gekoppelde norm. De punten drukken de sterkte van je voorkeur uit, niet hoe goed of slecht die keuze is.</p>`;
 }
 
 function renderValues() {
@@ -468,13 +468,13 @@ function renderValues() {
     <div class="value-scale${state.valueChoices[item.id] === undefined ? " unanswered" : ""}" id="valueScale">
       <label for="valueSlider" class="value-note-label">Welke kant krijgt voorrang?</label>
       <div class="scale-poles"><strong>${escapeHtml(item.left)}</strong><strong>${escapeHtml(item.right)}</strong></div>
-      <input type="range" id="valueSlider" min="0" max="5" step="1" value="${Math.max(0, VALUE_POSITIONS.indexOf(state.valueChoices[item.id]) >= 0 ? VALUE_POSITIONS.indexOf(state.valueChoices[item.id]) : 2)}" aria-describedby="sliderHint sliderChoice" aria-valuetext="${escapeHtml(valueLabel(item))}">
-      <div class="scale-ticks" aria-hidden="true"><span>Sterk</span><span>Duidelijk</span><span>Licht</span><span>Licht</span><span>Duidelijk</span><span>Sterk</span></div>
-      <p id="sliderHint" class="muted-note">Zes standen, zonder midden. Klik, sleep of gebruik de pijltjestoetsen. Een keuze telt pas nadat je de schuifregelaar gebruikt.</p>
+      <input type="range" id="valueSlider" min="0" max="3" step="1" value="${VALUE_POSITIONS.indexOf(state.valueChoices[item.id]) >= 0 ? VALUE_POSITIONS.indexOf(state.valueChoices[item.id]) : 1}" aria-describedby="sliderHint sliderChoice" aria-valuetext="${escapeHtml(valueLabel(item))}">
+      <div class="scale-ticks" aria-hidden="true"><span>Sterk</span><span>Licht</span><span>Licht</span><span>Sterk</span></div>
+      <p id="sliderHint" class="muted-note">Vier standen, zonder midden. Klik, sleep of gebruik de pijltjestoetsen. Een keuze telt pas nadat je de schuifregelaar gebruikt.</p>
       <output id="sliderChoice" for="valueSlider" aria-live="polite">${escapeHtml(valueLabel(item))}</output>
     </div>
-    <div class="value-consequence" aria-live="polite"><strong>Wat kan deze keuze betekenen?</strong><p id="valueEffect">${escapeHtml(valueEffect(item))}</p><div id="currentNorms">${currentNormHtml(item)}</div></div>
-    ${item.id === "beheer" ? `<fieldset class="delivery-options"><legend>Hoe wil je dit uitvoeren? <span>(optioneel, los van de punten)</span></legend>${[["build", "Zelf bouwen"], ["adapt", "Bestaande oplossing aanpassen"], ["buy", "Inkopen"]].map(([id, label]) => `<label><input type="radio" name="delivery-mode" value="${id}" ${state.deliveryMode === id ? "checked" : ""}> ${label}</label>`).join("")}</fieldset>` : ""}
+    <div class="value-consequence" aria-live="polite"><strong>Wat kan deze keuze betekenen?</strong><p id="valueEffect">${escapeHtml(valueEffect(item))}</p></div>
+    ${item.id === "beheer" ? `<fieldset class="delivery-options"><legend>Hoe wil je dit uitvoeren? <span>(optioneel)</span></legend>${[["build", "Zelf bouwen"], ["adapt", "Bestaande oplossing aanpassen"], ["buy", "Inkopen"]].map(([id, label]) => `<label><input type="radio" name="delivery-mode" value="${id}" ${state.deliveryMode === id ? "checked" : ""}> ${label}</label>`).join("")}</fieldset>` : ""}
     <label class="value-note-label" for="valueNote">Waarom past dit? Wie kan nadeel ervaren en wat doe je daarmee? <span>(optioneel)</span></label>
     <textarea id="valueNote" rows="3" placeholder="Een paar zinnen is genoeg. Noteer eventueel wat nog uitgezocht moet worden.">${escapeHtml(state.valueNotes[item.id] || "")}</textarea>
     <div class="value-links"><a href="#waarde-${item.id}" data-open-knowledge>Verdiep deze afweging in de kennisbank →</a><button type="button" class="small-button ghost" id="clearValue">Keuze openlaten</button></div>
@@ -482,12 +482,12 @@ function renderValues() {
   const slider = document.querySelector("#valueSlider");
   const updateChoice = () => {
     state.valueChoices[item.id] = VALUE_POSITIONS[Number(slider.value)];
+    state.valueReview = state.valueReview.filter((id) => id !== item.id);
     saveState();
     slider.setAttribute("aria-valuetext", valueLabel(item));
     document.querySelector("#sliderChoice").textContent = valueLabel(item);
     document.querySelector("#valueScale").classList.remove("unanswered");
     document.querySelector("#valueEffect").textContent = valueEffect(item);
-    document.querySelector("#currentNorms").innerHTML = currentNormHtml(item);
     renderValueProgress();
     renderReport();
   };
@@ -527,6 +527,9 @@ function selectValue(index) {
 
 function renderValueProgress() {
   const summary = getValuesSummary();
+  const migration = document.querySelector("#valuesMigration");
+  migration.hidden = !state.valueReview.length;
+  migration.textContent = state.valueReview.length ? "De stand ‘duidelijk’ is vervallen. Kies opnieuw licht of sterk bij: " + state.valueReview.map((id) => VALUE_TRADEOFFS.find((item) => item.id === id).title).join(", ") + ". Je toelichtingen zijn bewaard." : "";
   dom.valuesProgress.textContent = `${summary.answered}/${VALUE_TRADEOFFS.length}`;
   dom.valuesSummary.textContent = summary.text;
   dom.valueNavigation.querySelectorAll("[data-value-index]").forEach((button) => {
@@ -544,14 +547,14 @@ function renderValueKnowledge() {
     state.valueIndex = VALUE_TRADEOFFS.findIndex((item) => item.id === button.dataset.weigh);
     dom.returnToValues.click();
   }));
-  dom.valueKnowledge.insertAdjacentHTML("afterbegin", `<section class="hierarchy"><p class="kicker">Waarde → normen → ontwerpmaatregelen</p><h2>Menselijke maat in het ontwerp</h2><p>De waardenhiërarchie uit het tussentijdsrapport (hoofdstuk 3, figuur 3.1) onderscheidt vier normen. De acht afwegingen uit hoofdstuk 4 laten zien waar die normen kunnen schuren.</p><div class="norm-grid">${NORMS.map((norm) => `<article><p class="kicker">${escapeHtml(norm.sourceTitle)}</p><h3>${escapeHtml(norm.title)}</h3><p>${escapeHtml(norm.description)}</p><p><strong>Ontwerpmaatregel:</strong> ${escapeHtml(norm.action)}</p></article>`).join("")}</div>${scoringExplanation()}</section>`);
+  dom.valueKnowledge.insertAdjacentHTML("afterbegin", `<section class="hierarchy"><p class="kicker">Waarde → normen → ontwerpmaatregelen</p><h2>Menselijke maat in het ontwerp</h2><p>De waardenhiërarchie uit het tussentijdsrapport (hoofdstuk 3, figuur 3.1) onderscheidt vier normen. De acht afwegingen uit hoofdstuk 4 laten zien waar die normen kunnen schuren.</p><div class="norm-grid">${NORMS.map((norm) => `<article><p class="kicker">${escapeHtml(norm.sourceTitle)}</p><h3>${escapeHtml(norm.title)}</h3><p>${escapeHtml(norm.description)}</p><p><strong>Ontwerpmaatregel:</strong> ${escapeHtml(norm.action)}</p></article>`).join("")}</div></section>`);
   VALUE_TRADEOFFS.forEach((item) => {
-    document.querySelector(`#waarde-${item.id}`).insertAdjacentHTML("beforeend", `<details class="norm-mapping"><summary>Koppeling aan de normen en punten</summary>${["left", "right"].map((side) => `<h4>Bij meer nadruk op ${(side === "left" ? item.left : item.right).toLowerCase()}</h4><ul>${NORM_LINKS[item.id][side].map((link) => `<li><strong>${escapeHtml(NORMS.find((norm) => norm.id === link.norm).title)}:</strong> ${escapeHtml(link.reason)} ${escapeHtml(link.action)}</li>`).join("")}</ul>`).join("")}<p>Elke genoemde norm krijgt 1, 2 of 3 aandachtspunten bij een lichte, duidelijke of sterke voorkeur voor deze kant. Dit is een redactionele vertaling om te beproeven in de praktijk.</p></details>`);
+    document.querySelector(`#waarde-${item.id}`).insertAdjacentHTML("beforeend", `<details class="norm-mapping"><summary>Koppeling aan de normen</summary>${["left", "right"].map((side) => `<h4>Bij meer nadruk op ${(side === "left" ? item.left : item.right).toLowerCase()}</h4><ul>${NORM_LINKS[item.id][side].map((link) => `<li><strong>${escapeHtml(NORMS.find((norm) => norm.id === link.norm).title)}:</strong> ${escapeHtml(link.reason)} ${escapeHtml(link.action)}</li>`).join("")}</ul>`).join("")}<p>Het rapport verbindt je voorkeur aan deze normen en bijbehorende ontwerpmaatregelen.</p></details>`);
   });
 }
 
 function scoringExplanation() {
-  return `<details class="scoring-method"><summary>Hoe worden de aandachtspunten berekend?</summary><p>De zes standen zijn −3, −2, −1, +1, +2 en +3. Het teken geeft de kant aan; de grootte geeft 1, 2 of 3 punten aan iedere norm die bij die kant extra ontwerpaandacht vraagt. Er worden geen punten afgetrokken: zorgen kunnen elkaar niet wegstrepen.</p><p>Per norm tellen we de punten op. Het maximum is drie maal het aantal afwegingen dat aan die norm kan raken. De maxima verschillen; vergelijk de ruwe aantallen daarom niet als een ranglijst. Open vragen tellen niet als nul: ze staan apart vermeld en maken het profiel voorlopig.</p><p>De uitkomst is geen rapportcijfer, risicokans of bewijs dat aan een norm is voldaan. De vier normen en het speelveld komen uit het tussentijdsrapport; de koppelingen en de weging 1–3 zijn een nieuwe, nog niet gevalideerde ontwerpkeuze (${SCORING_VERSION}). Alle vier de normen blijven van belang, ook bij nul extra punten. Maatregelen verdienen geen aftrekpunten; hun werking moet je in de praktijk toetsen.</p></details>`;
+  return `<details class="scoring-method"><summary>Hoe worden de aandachtspunten berekend?</summary><p>De vier standen zijn −2, −1, +1 en +2. Het teken geeft de kant aan; een lichte voorkeur geeft 1 punt en een sterke voorkeur 2 punten aan iedere norm die bij die kant extra ontwerpaandacht vraagt. Er worden geen punten afgetrokken: zorgen kunnen elkaar niet wegstrepen.</p><p>Per norm tellen we de punten op. Het maximum is twee maal het aantal afwegingen dat aan die norm kan raken. De maxima verschillen; vergelijk de ruwe aantallen daarom niet als een ranglijst. Open vragen tellen niet als nul: ze staan apart vermeld en maken het profiel voorlopig.</p><p>De uitkomst is geen rapportcijfer, risicokans of bewijs dat aan een norm is voldaan. De vier normen en het speelveld komen uit het tussentijdsrapport; de koppelingen en de weging 1–2 zijn een nieuwe, nog niet gevalideerde ontwerpkeuze (${SCORING_VERSION}). Alle vier de normen blijven van belang, ook bij nul extra punten. Maatregelen verdienen geen aftrekpunten; hun werking moet je in de praktijk toetsen.</p></details>`;
 }
 
 function normProfileHtml() {
@@ -650,7 +653,7 @@ function getValuesSummary() {
   const open = VALUE_TRADEOFFS.filter((item) => state.valueChoices[item.id] === undefined);
   const answered = VALUE_TRADEOFFS.length - open.length;
   const notes = VALUE_TRADEOFFS.filter((item) => state.valueNotes[item.id]?.trim()).length;
-  return { answered, open, label: `${answered}/${VALUE_TRADEOFFS.length} keuzes vastgelegd`, text: `${answered} keuzes vastgelegd, ${open.length} nog open en ${notes} toelichtingen. ${open.length ? "Het aandachtsprofiel is voorlopig." : "Bekijk in het rapport welke normen extra ontwerpaandacht vragen."}` };
+  return { answered, open, label: `${answered}/${VALUE_TRADEOFFS.length} keuzes vastgelegd`, text: `${answered} keuzes vastgelegd, ${open.length} nog open en ${notes} toelichtingen. ${open.length ? "Het aandachtsprofiel is voorlopig." : "Bekijk de gevolgen van je keuzes in het rapport."}` };
 }
 
 function getSurveySummary() {
@@ -805,7 +808,7 @@ function valuesMarkdown() {
 }
 
 function normProfileMarkdown() {
-  return `### ${getValuesSummary().open.length ? "Voorlopig aandachtsprofiel" : "Aandachtsprofiel"}\n\nWaarde: menselijke maat. De vier normen vertalen we hieronder naar ontwerpmaatregelen.\n\n` + getNormProfile().map((norm) => `#### ${norm.title}\n\n${norm.points} van ${norm.maximum} mogelijke aandachtspunten; ${norm.open} relevante afweging(en) nog open.\n\nBasismaatregel: ${norm.action}\n\n${norm.contributions.length ? norm.contributions.map((entry) => `- ${entry.tradeoff}: +${entry.points}. ${entry.reason} Ontwerpmaatregel: ${entry.action}`).join("\n") : "Nog geen extra punten uit de ingevulde keuzes; dit zegt niet of de norm geborgd is."}`).join("\n\n") + `\n\n#### Verantwoording van de puntentelling\n\nLichte, duidelijke en sterke voorkeuren geven 1, 2 en 3 aandachtspunten aan elke gekoppelde norm. Punten tellen op en strepen elkaar niet weg. Het maximum per norm is drie maal het aantal mogelijk relevante afwegingen. Vergelijk de ruwe aantallen niet als ranglijst: de maxima verschillen. Open vragen worden apart geteld en maken het profiel voorlopig. Alle normen blijven van belang, ook bij nul punten. Maatregelen verlagen de punten niet; hun werking vraagt toetsing in de praktijk.\n\nBron: aangeleverd tussentijdsrapport, hoofdstuk 3 (figuur 3.1) en hoofdstuk 4 (figuur 4.2). De koppelingen en weging zijn een nieuwe, niet gevalideerde ontwerpkeuze (${SCORING_VERSION}), geen rapportcijfer, risicokans of bewijs van naleving.\n\n`;
+  return `### ${getValuesSummary().open.length ? "Voorlopig aandachtsprofiel" : "Aandachtsprofiel"}\n\nWaarde: menselijke maat. De vier normen vertalen we hieronder naar ontwerpmaatregelen.\n\n` + getNormProfile().map((norm) => `#### ${norm.title}\n\n${norm.points} van ${norm.maximum} mogelijke aandachtspunten; ${norm.open} relevante afweging(en) nog open.\n\nBasismaatregel: ${norm.action}\n\n${norm.contributions.length ? norm.contributions.map((entry) => `- ${entry.tradeoff}: +${entry.points}. ${entry.reason} Ontwerpmaatregel: ${entry.action}`).join("\n") : "Nog geen extra punten uit de ingevulde keuzes; dit zegt niet of de norm geborgd is."}`).join("\n\n") + `\n\n#### Verantwoording van de puntentelling\n\nLichte en sterke voorkeuren geven respectievelijk 1 en 2 aandachtspunten aan elke gekoppelde norm. Punten tellen op en strepen elkaar niet weg. Het maximum per norm is twee maal het aantal mogelijk relevante afwegingen. Vergelijk de ruwe aantallen niet als ranglijst: de maxima verschillen. Open vragen worden apart geteld en maken het profiel voorlopig. Alle normen blijven van belang, ook bij nul punten. Maatregelen verlagen de punten niet; hun werking vraagt toetsing in de praktijk.\n\nBron: aangeleverd tussentijdsrapport, hoofdstuk 3 (figuur 3.1) en hoofdstuk 4 (figuur 4.2). De koppelingen en weging zijn een nieuwe, niet gevalideerde ontwerpkeuze (${SCORING_VERSION}), geen rapportcijfer, risicokans of bewijs van naleving.\n\n`;
 }
 
 function buildMarkdown() {

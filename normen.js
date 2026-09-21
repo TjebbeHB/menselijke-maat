@@ -90,5 +90,5 @@ const NORM_LINKS = {
   }
 };
 
-const VALUE_POSITIONS = [-3, -2, -1, 1, 2, 3];
-const SCORING_VERSION = "aandachtsprofiel-1";
+const VALUE_POSITIONS = [-2, -1, 1, 2];
+const SCORING_VERSION = "aandachtsprofiel-2";

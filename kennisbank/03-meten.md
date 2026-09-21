@@ -24,7 +24,7 @@ Je legt cijfers naast ervaringen en onderzoekt verschillen. Dat geeft een rijker
 
 ## Meer nadruk op rechts
 
-Je geeft ervaringen en professioneel oordeel meer ruimte. Daarmee zie je nuances, maar structurele problemen of willekeur kunnen zonder vaste controles onopgemerkt blijven.
+Je geeft ervaringen en professioneel oordeel meer ruimte.
 
 ## Mogelijke uitwerkingen
 
@@ -34,4 +34,3 @@ Je geeft ervaringen en professioneel oordeel meer ruimte. Daarmee zie je nuances
 ## Aandachtspunt
 
 Gebruik geen totaalcijfer als bewijs dat de menselijke maat op orde is.
-

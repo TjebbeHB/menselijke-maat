@@ -1,22 +1,22 @@
 ---
 id: kosten
-title: Geld en maatschappelijke gevolgen
-left: Directe kosten beperken
-right: Sociale schade voorkomen
-question: Welke kosten bespaar je, wie draagt de lasten en welke gevolgen zie je pas later?
+title: Uitvoeringskosten en lasten voor burgers
+left: Lagere uitvoeringskosten
+right: Minder lasten voor burgers
+question: Wat krijgt voorrang: besparen op de uitvoering of verminderen van tijd, moeite en onzekerheid voor burgers?
 ---
 
 ## Context
 
-Geld, beschikbare tijd, stress, vertrouwen en waardigheid vragen een gezamenlijke afweging. Niet alles is betrouwbaar in euro's uit te drukken. Ook een goedbedoelde investering moet op haar werking worden onderzocht.
+Een snellere of goedkopere uitvoering kan meer werk bij burgers leggen. Extra ondersteuning kan burgers tijd, moeite en onzekerheid besparen, maar vraagt inzet van de organisatie. Soms gaan beide samen; geef hier aan wat voorrang krijgt als dat niet lukt.
 
 ## Voorbeeld
 
-Automatische controle bespaart behandeltijd, maar onterechte signalen veroorzaken stress, bezwaar en herstelwerk.
+Zelf bewijsstukken laten verzamelen kost de organisatie minder behandeltijd. Een medewerker laten helpen vraagt extra inzet, maar kan burgers zoekwerk, herhaalvragen en onzekerheid besparen.
 
 ## Meer nadruk op links
 
-Je houdt de directe uitgaven beheersbaar. Lasten kunnen verschuiven naar burgers, andere organisaties of later herstel, waardoor de totale kosten juist stijgen.
+Je legt de nadruk op minder behandeltijd en lagere uitvoeringskosten voor de organisatie. Onderzoek of burgers hierdoor meer zelf moeten uitzoeken, aanleveren of herstellen.
 
 ## Combineren in de uitvoering
 
@@ -24,7 +24,7 @@ Je weegt uitgaven, herstelwerk en ervaringen samen. Dit vraagt onderzoek; onzeke
 
 ## Meer nadruk op rechts
 
-Je investeert meer in het voorkomen van sociale schade. Daar staat minder budget voor andere doelen tegenover; toets of de investering mensen daadwerkelijk helpt.
+Je legt de nadruk op minder tijd, moeite en onzekerheid voor burgers, bijvoorbeeld door persoonlijke ondersteuning. Dit vraagt capaciteit en budget; toets of die inzet de lasten voor burgers daadwerkelijk vermindert.
 
 ## Mogelijke uitwerkingen
 
@@ -34,4 +34,3 @@ Je investeert meer in het voorkomen van sociale schade. Daar staat minder budget
 ## Aandachtspunt
 
 Presenteer onzekere maatschappelijke effecten niet als bewezen besparingen.
-

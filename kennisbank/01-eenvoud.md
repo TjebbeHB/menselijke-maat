@@ -16,7 +16,7 @@ Een aanvraag heeft weinig vragen. Iemand met wisselende inkomsten kan daardoor d
 
 ## Meer nadruk op links
 
-Je legt de nadruk op overzicht en weinig handelingen. Bijzondere omstandigheden kunnen buiten beeld blijven; mensen kunnen afhaken of passende hulp mislopen.
+Je legt de nadruk op overzicht en weinig handelingen. Bijzondere omstandigheden kunnen buiten beeld blijven.
 
 ## Combineren in de uitvoering
 
@@ -34,4 +34,3 @@ Je biedt meer ruimte voor bijzondere omstandigheden. Dat kan passende hulp verbe
 ## Aandachtspunt
 
 Laat vereenvoudiging niet betekenen dat iemand de eigen situatie nergens kan laten beoordelen.
-

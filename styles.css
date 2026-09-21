@@ -711,11 +711,15 @@ textarea {
 .scale-poles strong:last-child { text-align: right; }
 #valueSlider { width: 100%; height: 3rem; accent-color: var(--green-900); cursor: pointer; }
 .unanswered #valueSlider { opacity: 0.55; }
-.scale-ticks { display: grid; grid-template-columns: repeat(6, 1fr); text-align: center; font-size: 0.8rem; }
+.scale-ticks { display: flex; justify-content: space-between; font-size: 0.8rem; }
 .scale-ticks span:first-child { text-align: left; }
 .scale-ticks span:last-child { text-align: right; }
 #sliderChoice { display: block; font-weight: 900; color: var(--green-900); margin-top: 0.75rem; }
 .muted-note { font-size: 0.88rem; color: #52645b; }
+.survey-guide { background: var(--green-100); padding: 1.2rem; border-radius: 8px; margin-bottom: 1.5rem; }
+.survey-guide h3 { line-height: 1.4; }
+.survey-guide ol { padding-left: 1.4rem; }
+.survey-guide li { margin-bottom: 0.65rem; }
 .delivery-options { display: grid; gap: 0.75rem; border: 1px solid var(--line); padding: 1rem; margin: 1rem 0; }
 .delivery-options label { min-height: 2rem; }
 .norm-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1rem 0; }
