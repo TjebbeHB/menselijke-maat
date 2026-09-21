@@ -1,0 +1,12 @@
+{
+  "name": "menselijke-maat-verkenner",
+  "private": true,
+  "version": "0.2.0",
+  "scripts": {
+    "build": "node scripts/bouw-kennisbank.mjs",
+    "test": "node tests/waarden.test.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

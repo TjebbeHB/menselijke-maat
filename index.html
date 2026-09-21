@@ -23,9 +23,9 @@
       </a>
 
       <nav class="top-nav" aria-label="Hoofdnavigatie">
-        <button class="nav-link active" type="button" data-view-link="home">Over deze tool</button>
+        <button class="nav-link active" type="button" data-view-link="home">Over deze verkenner</button>
         <button class="nav-link" type="button" data-view-link="knowledge">Kennisbank</button>
-        <button class="nav-link" type="button" data-view-link="tools">Wat voor tools zijn er?</button>
+        <button class="nav-link" type="button" data-view-link="tools">Werkvormen</button>
       </nav>
 
       <button class="info-button" type="button" data-view-link="knowledge" aria-label="Meer informatie">i</button>
@@ -35,7 +35,7 @@
       <section id="home" class="view active-view" aria-labelledby="homeTitle">
         <div class="hero">
           <div class="hero-copy">
-            <p class="kicker">Prototype voor gemeenten en publieke dienstverleners</p>
+            <p class="kicker">Proefversie voor publieke organisaties en dienstverleners</p>
             <h1 id="homeTitle">Menselijke Maat AI Verkenner</h1>
             <p>
               Een interactieve routeplanner plus onderzoekswerkbank om AI-toepassingen in de sociale zekerheid te
@@ -47,10 +47,10 @@
                 Kennisbank <span aria-hidden="true">→</span>
               </button>
               <button class="big-button primary" type="button" data-start-tool>
-                Menselijke Maat Tool <span aria-hidden="true">→</span>
+                Menselijke Maat Verkenner <span aria-hidden="true">→</span>
               </button>
               <button class="big-button secondary" type="button" data-view-link="tools">
-                Wat voor tools zijn er? <span aria-hidden="true">→</span>
+                Werkvormen <span aria-hidden="true">→</span>
               </button>
             </div>
           </div>
@@ -58,7 +58,7 @@
 
         <section class="how-section" aria-labelledby="howTitle">
           <h2 id="howTitle">Hoe werkt het?</h2>
-          <p>De beslisboom stelt vragen over een situatie. Samen verken je opties en kom je tot een keuze die past bij de menselijke maat.</p>
+          <p>De verkenner bestaat uit een beslisboom en een kennisbank. In de beslisboom verken je wettelijke kaders en waardenafwegingen. De kennisbank helpt je om die afwegingen op jouw situatie toe te passen, ook als je zelfstandig met AI experimenteert.</p>
           <div class="how-cards">
             <article class="how-card">
               <img src="assets/step-thinking.png" alt="" />
@@ -93,8 +93,8 @@
         <div class="tool-shell">
           <aside class="phase-sidebar" aria-label="Onderdelen">
             <button class="phase-tab active" type="button" data-phase-link="eu">1. EU-regels</button>
-            <button class="phase-tab" type="button" data-phase-link="checklist">2. Checklist</button>
-            <button class="phase-tab" type="button" data-phase-link="vignettes">3. Worst-case users</button>
+            <button class="phase-tab" type="button" data-phase-link="values">2. Waardenafweging</button>
+            <button class="phase-tab" type="button" data-phase-link="vignettes">3. Ongeziene burgers</button>
             <button class="phase-tab" type="button" data-phase-link="citizens">4. Burgerperspectief</button>
             <button class="phase-tab" type="button" data-phase-link="report">5. Rapport</button>
           </aside>
@@ -102,10 +102,10 @@
           <section class="tool-panel">
             <div class="tool-topbar">
               <div>
-                <p class="kicker">Menselijke Maat Tool</p>
+                <p class="kicker">Menselijke Maat Verkenner</p>
                 <h1 id="toolTitle">Beslisboom</h1>
               </div>
-              <button class="small-button ghost" type="button" id="resetProgress">Reset voortgang</button>
+              <button class="small-button ghost" type="button" id="resetProgress">Wis voortgang</button>
             </div>
 
             <section class="phase active-phase" data-phase="eu" aria-labelledby="euTitle">
@@ -128,24 +128,26 @@
 
               <div class="phase-actions">
                 <button class="small-button" type="button" id="previousQuestion">← Vorige vraag</button>
-                <button class="small-button primary" type="button" data-next-phase>Door naar checklist →</button>
+                <button class="small-button primary" type="button" data-next-phase>Door naar waardenafweging →</button>
               </div>
             </section>
 
-            <section class="phase" data-phase="checklist" aria-labelledby="checklistTitle">
+            <section class="phase" data-phase="values" aria-labelledby="valuesTitle">
               <div class="phase-heading">
                 <div>
                   <p class="kicker">Stap 2 van 5</p>
-                  <h2 id="checklistTitle">Checklist menselijke maat</h2>
-                  <p>Korte, concretere vragen voor ambtenaren. Beantwoord ze op basis van wat nu al geregeld is.</p>
+                  <h2 id="valuesTitle">Welke waarden geef je voorrang?</h2>
+                  <p>Verken acht afwegingen, één voor één. Verschuif de knop naar de kant die in jouw situatie voorrang krijgt: een beetje, duidelijk of sterk. Er is geen middenstand.</p>
                 </div>
-                <span class="score-badge" id="checklistScore">Nog open</span>
+                <span class="score-badge" id="valuesProgress">0/8</span>
               </div>
-              <div id="checklistGrid" class="question-list"></div>
-              <p id="checklistSummary" class="phase-note"></p>
+              <p class="values-intro">Je keuzes leveren aandachtspunten op bij de vier normen voor menselijke maat. Zo zie je welke ontwerpmaatregelen extra aandacht vragen. Wettelijke verplichtingen blijven het uitgangspunt.</p>
+              <nav id="valueNavigation" class="chip-row" aria-label="Kies een afweging"></nav>
+              <div id="valueCard" class="value-card"></div>
+              <p id="valuesSummary" class="phase-note" aria-live="polite"></p>
               <div class="phase-actions sticky-next">
                 <button class="small-button" type="button" data-prev-phase>← Terug</button>
-                <button class="small-button primary" type="button" data-next-phase>Door naar worst-case users →</button>
+                <button class="small-button primary" type="button" data-next-phase>Door naar casussen →</button>
               </div>
             </section>
 
@@ -153,7 +155,7 @@
               <div class="phase-heading">
                 <div>
                   <p class="kicker">Stap 3 van 5</p>
-                  <h2 id="vignetteTitle">Vignettes van worst-case users</h2>
+                  <h2 id="vignetteTitle">Ongeziene burgers en randgevallen</h2>
                   <p>Bespreek per casus waar het proces voor mensen kan vastlopen of onmenselijk kan voelen.</p>
                 </div>
                 <span class="score-badge" id="vignetteScore">Nog open</span>
@@ -184,7 +186,7 @@
                 <div>
                   <p class="kicker">Stap 4 van 5</p>
                   <h2 id="citizenTitle">Korte vragenlijst burgerperspectief</h2>
-                  <p>Gebruik dit als interviewscript of quick scan van het bestaande proces.</p>
+                  <p>Gebruik dit als gespreksleidraad of korte toets van het bestaande proces.</p>
                 </div>
                 <span class="score-badge" id="surveyScore">Nog open</span>
               </div>
@@ -198,7 +200,7 @@
                 </article>
                 <article>
                   <h3>Chatbot-interview</h3>
-                  <p>Placeholder: later kan een chatbot inwoners interviewen over het bestaande proces.</p>
+                  <p>Placeholder: later kan een chatbot burgers interviewen over het bestaande proces.</p>
                   <span>Consent, opslagbeleid en escalatie nodig</span>
                 </article>
               </div>
@@ -217,7 +219,7 @@
                   <h2 id="reportTitle">Rapport en vervolgstappen</h2>
                   <p>Dit rapport is netjes opgemaakt als Markdown en neemt de ingevulde onderdelen mee.</p>
                 </div>
-                <button class="small-button primary" type="button" id="downloadReport">Download MD</button>
+                <button class="small-button primary" type="button" id="downloadReport">Sla verslag op (.md)</button>
               </div>
               <div id="reportPreview" class="report-preview"></div>
               <div class="phase-actions sticky-next">
@@ -234,14 +236,16 @@
           <div>
             <p class="kicker">Kennisbank</p>
             <h1 id="knowledgeTitle">Begrippen, kaders en uitleg</h1>
-            <p>Een compacte kennislaag voor teams die snel dezelfde taal willen spreken voordat ze de beslisboom invullen.</p>
+            <p>De kennisbank geeft verdieping bij de beslisboom: wat staat er op het spel, welke gevolgen zijn denkbaar en hoe vertaal je een waarde naar de praktijk?</p>
           </div>
           <img src="assets/knowledge-books.png" alt="Illustratie van boeken" />
         </div>
+        <button class="small-button" id="returnToValues" type="button" hidden>← Terug naar mijn afweging</button>
+        <div id="valueKnowledge" class="value-knowledge"></div>
         <div class="info-grid">
           <article>
             <h2>AI Act in gewone taal</h2>
-            <p>Wat betekent high-risk, verboden praktijk, GPAI en menselijk toezicht voor een gemeentelijk project?</p>
+            <p>Wat betekent high-risk, verboden praktijk, GPAI en menselijk toezicht voor een project binnen de publieke dienstverlening?</p>
           </article>
           <article>
             <h2>Menselijke maat</h2>
@@ -258,7 +262,7 @@
         <div class="info-hero">
           <div>
             <p class="kicker">Inspiratiebibliotheek</p>
-            <h1 id="toolsTitle">Wat voor tools zijn er?</h1>
+            <h1 id="toolsTitle">Werkvormen</h1>
             <p>De verkenner combineert meerdere methodes. Sommige werken al statisch; andere vragen later een backend.</p>
           </div>
           <img src="assets/toolbox.png" alt="Illustratie van een gereedschapskist" />
@@ -269,12 +273,12 @@
             <p>Een gestructureerde route langs EU-regels, menselijke maat en uitvoeringsvragen.</p>
           </article>
           <article>
-            <h2>Checklist</h2>
-            <p>Een korte zelfscan die laat zien waar de menselijke maat nog onvoldoende is uitgewerkt.</p>
+            <h2>Waardenafweging</h2>
+            <p>Acht afwegingen maken zichtbaar welke waarden je voorrang geeft, wie gevolgen kan ervaren en welke vervolgstap nodig is.</p>
           </article>
           <article>
-            <h2>Vignettes</h2>
-            <p>Worst-case users maken abstracte risico's bespreekbaar in teamgesprekken.</p>
+            <h2>Praktijkcasussen</h2>
+            <p>Ongeziene burgers maken abstracte risico's bespreekbaar in teamgesprekken.</p>
           </article>
           <article>
             <h2>LLM en chatbot</h2>
@@ -284,6 +288,8 @@
       </section>
     </main>
 
+    <script src="waarden.js"></script>
+    <script src="normen.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

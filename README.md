@@ -1,32 +1,42 @@
-# Menselijke Maat AI Verkenner
+# Menselijke Maat Verkenner
 
-Statische prototype-site voor gemeenten en publieke dienstverleners. De site gebruikt de aangeleverde illustraties en leidt gebruikers door losse onderdelen in plaats van een lange pagina.
+[Open de website](https://tjebbehb.github.io/menselijke-maat/)
 
-## Inhoud
+Een beslisboom en kennisbank voor het bespreken van AI in publieke dienstverlening. Gebaseerd op de openbare [GAK-proefversie van Digicampus](https://github.com/digicampus-prototypes/GAK), met een uitgewerkte waardenafweging en verbinding met de waardenhiërarchie uit het aangeleverde tussentijdsrapport (hoofdstukken 3 en 4).
 
-- Landingpage met drie grote knoppen: `Kennisbank`, `Menselijke Maat Tool` en `Wat voor tools zijn er?`.
-- Gefaseerde beslisboom: eerst EU-regels, daarna checklist, worst-case users, burgerperspectief en rapport.
-- Eenvoudigere checklistvragen met korte antwoordopties.
-- Tooltips bij ingewikkelde begrippen zoals social scoring en bijzondere persoonsgegevens.
-- Voortgang wordt lokaal bewaard in de browser via `localStorage`.
-- Netter Markdown-rapport met samenvatting, tabellen, risico's en acties.
-- Placeholders voor LLM-documentanalyse en chatbot-interview die later backend nodig hebben.
+## Wat is nieuw?
 
-## Lokaal openen
+- Stap 2 bevat acht afwegingen met schuifregelaars met zes standen, zonder middenstand.
+- Lichte, duidelijke en sterke voorkeuren geven 1, 2 en 3 aandachtspunten aan de normen die bij die kant extra ontwerpaandacht vragen.
+- Het rapport verbindt de vier normen aan concrete ontwerpmaatregelen en toont waar de punten vandaan komen.
+- Dit profiel is een redactioneel hulpmiddel, geen gevalideerde meting of totaalcijfer voor de menselijke maat. Open vragen blijven zichtbaar; tegengestelde voorkeuren heffen elkaars aandachtspunten niet op.
+- Bij publiek/privaat beheer staat de uitvoering (zelf bouwen, aanpassen, inkopen) apart van de regievraag.
+- Keuzes en toelichtingen blijven lokaal in de browser. De Markdown-uitvoer neemt het profiel, de verantwoording, keuzes en kennisbanklinks mee.
 
-Open `index.html` in de browser.
+## Teksten bewerken zonder code
 
-## GitHub Pages
+Ga naar [kennisbank](kennisbank/LEES-MIJ.md), open een genummerd Markdown-bestand en gebruik het potloodje van GitHub. Na het opslaan op `main` bouwt GitHub Actions de tekst om en publiceert de website. Laat de technische velden en kopnamen staan zoals uitgelegd in de leeswijzer.
 
-1. Push de map naar een GitHub-repository.
-2. Ga naar `Settings -> Pages`.
-3. Kies `Deploy from a branch`.
-4. Selecteer de hoofdbranch en map `/`.
-5. Publiceer de site.
+De puntentoekenning en koppelingen naar normen staan afzonderlijk in `normen.js`. Pas die alleen aan als je bewust het inhoudelijke afwegingsmodel wijzigt. De versie van dat model staat ook in ieder verslag.
 
-## Bestanden
+## Lokaal werken
 
-- `index.html`
-- `styles.css`
-- `app.js`
-- `assets/`
+Open `index.html` rechtstreeks in een browser. Na het wijzigen van Markdown:
+
+```sh
+npm ci
+npm run build
+```
+
+Voor de browsertests:
+
+```sh
+npx playwright install chromium
+npm test
+```
+
+De tests controleren alle 48 combinaties van afweging en schuifstand, toetsenbordbediening, opslag, kennisbanknavigatie, verslag, migratie en de mobiele weergave. Op macOS gebruiken ze een aanwezige Chrome-installatie; elders de geïnstalleerde Playwright-browser.
+
+## Publicatie
+
+De workflow `.github/workflows/pages.yml` bouwt de kennisbank, voert tests uit en publiceert via GitHub Pages. Alleen websitebestanden, illustraties en openbare kennisbankteksten gaan naar de website. Het aangeleverde onderzoeksrapport en screenshots zijn context en worden niet als bronbestanden meegestuurd.

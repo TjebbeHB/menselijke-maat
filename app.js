@@ -1,6 +1,7 @@
 const STORAGE_KEY = "menselijke-maat-verkenner-v2";
 
-const PHASES = ["eu", "checklist", "vignettes", "citizens", "report"];
+const PHASES = ["eu", "values", "vignettes", "citizens", "report"];
+const KNOWLEDGE_URL = "https://tjebbehb.github.io/menselijke-maat/";
 
 const EU_QUESTIONS = [
   {
@@ -15,10 +16,10 @@ const EU_QUESTIONS = [
   },
   {
     id: "rights",
-    title: "Kan een inwoner merkbaar geraakt worden?",
+    title: "Kan een burger merkbaar geraakt worden?",
     help: "Denk aan geld, hulp, toezicht, bezwaar, wachttijd of toegang tot een regeling.",
     options: [
-      ["yes", "Ja", "De uitkomst kan gevolgen hebben voor inwoners."],
+      ["yes", "Ja", "De uitkomst kan gevolgen hebben voor burgers."],
       ["maybe", "Misschien", "Dat is nog niet goed uitgezocht."],
       ["no", "Nee", "Het blijft intern en zonder effect op dienstverlening."],
     ],
@@ -79,34 +80,6 @@ const EU_QUESTIONS = [
   },
 ];
 
-const CHECKLIST = [
-  {
-    id: "easier",
-    title: "Wordt het voor inwoners eenvoudiger?",
-    help: "Denk aan minder stappen, begrijpelijkere taal en minder kastje-muur.",
-  },
-  {
-    id: "burden",
-    title: "Neemt de administratieve last af?",
-    help: "Kijk vooral naar kwetsbare inwoners: bewijsstukken, herhaalvragen en digitale drempels.",
-  },
-  {
-    id: "contact",
-    title: "Blijft persoonlijk contact makkelijk te vinden?",
-    help: "Een inwoner moet kunnen overstappen naar een mens als de situatie daarom vraagt.",
-  },
-  {
-    id: "empathy",
-    title: "Is empathische afweging mogelijk?",
-    help: "Medewerkers moeten ruimte houden om context, uitzonderingen en hardheid mee te wegen.",
-  },
-  {
-    id: "monitoring",
-    title: "Meten jullie of menselijke maat beter of slechter wordt?",
-    help: "Gebruik indicatoren zoals begrijpelijkheid, herstelwerk, bezwaar, wachttijd en ervaren rechtvaardigheid.",
-  },
-];
-
 const SCORE_OPTIONS = [
   ["good", "Goed geregeld", 2],
   ["partial", "Deels", 1],
@@ -115,13 +88,24 @@ const SCORE_OPTIONS = [
 
 const VIGNETTES = [
   {
+    id: "neurodivergence",
+    label: "Neurodivergentie",
+    title: "Burger die informatie anders verwerkt",
+    scenario: "Een neurodivergente burger raakt overbelast door veel prikkels, onduidelijke instructies of onverwachte veranderingen. Wat helpt verschilt per persoon; ga daarover in gesprek.",
+    prompts: [
+      "Kan iemand de route in eigen tempo doorlopen, pauzeren en hervatten?",
+      "Zijn instructies concreet en voorspelbaar, zonder onnodige prikkels?",
+      "Kan iemand passende ondersteuning of een andere contactvorm kiezen zonder een diagnose te moeten delen?"
+    ]
+  },
+  {
     id: "stress",
     label: "Schuldenstress",
     title: "Alleenstaande ouder met schuldenstress",
     scenario:
-      "De inwoner moet meerdere bewijsstukken aanleveren, begrijpt de brief niet goed en stopt zodra een formulier terugkomt met fouten.",
+      "De burger moet meerdere bewijsstukken aanleveren, begrijpt de brief niet goed en stopt zodra een formulier terugkomt met fouten.",
     prompts: [
-      "Waar wordt dit proces voor deze inwoner slechter dan nu?",
+      "Waar wordt dit proces voor deze burger slechter dan nu?",
       "Wanneer moet een medewerker actief contact opnemen?",
       "Welke indicator toont vroeg dat deze groep vastloopt?",
     ],
@@ -129,7 +113,7 @@ const VIGNETTES = [
   {
     id: "caregiver",
     label: "Mantelzorger",
-    title: "Oudere inwoner met mantelzorger",
+    title: "Oudere burger met mantelzorger",
     scenario:
       "De formele aanvrager en de feitelijke gebruiker zijn niet dezelfde persoon. Informatie loopt via een familielid.",
     prompts: [
@@ -140,10 +124,10 @@ const VIGNETTES = [
   },
   {
     id: "language",
-    label: "Taalbarriere",
-    title: "Inwoner met taalbarriere en laag vertrouwen",
+    label: "Taalbarrière",
+    title: "Burger met taalbarrière en laag vertrouwen",
     scenario:
-      "De inwoner begrijpt formele taal slecht, vertrouwt overheidsteksten weinig en haakt af bij modelmatige toon.",
+      "De burger begrijpt formele taal slecht, vertrouwt overheidsteksten weinig en haakt af bij modelmatige toon.",
     prompts: [
       "Welke uitleg moet in gewone taal beschikbaar zijn?",
       "Hoe voorkom je dat AI-taal afstandelijk of dreigend voelt?",
@@ -153,12 +137,12 @@ const VIGNETTES = [
   {
     id: "worker",
     label: "Medewerker",
-    title: "Uitvoerende medewerker met hoge caseload",
+    title: "Uitvoerende medewerker met hoge werkdruk",
     scenario:
       "De tool lijkt tijd te winnen, maar uitzonderingen en subtiele context uit gesprekken raken makkelijker uit beeld.",
     prompts: [
-      "Waar kan interne efficientie botsen met menselijke dienstverlening?",
-      "Welke override-momenten moeten zichtbaar blijven?",
+      "Waar kan interne efficiëntie botsen met menselijke dienstverlening?",
+      "Op welke momenten moeten medewerkers kunnen afwijken?",
       "Welke signalen tonen dat medewerkers te veel op AI gaan leunen?",
     ],
   },
@@ -204,9 +188,12 @@ const dom = {
   euAnswerList: document.querySelector("#euAnswerList"),
   euProgress: document.querySelector("#euProgress"),
   previousQuestion: document.querySelector("#previousQuestion"),
-  checklistGrid: document.querySelector("#checklistGrid"),
-  checklistScore: document.querySelector("#checklistScore"),
-  checklistSummary: document.querySelector("#checklistSummary"),
+  valueNavigation: document.querySelector("#valueNavigation"),
+  valueCard: document.querySelector("#valueCard"),
+  valuesProgress: document.querySelector("#valuesProgress"),
+  valuesSummary: document.querySelector("#valuesSummary"),
+  valueKnowledge: document.querySelector("#valueKnowledge"),
+  returnToValues: document.querySelector("#returnToValues"),
   vignetteTabs: document.querySelector("#vignetteTabs"),
   vignetteMeta: document.querySelector("#vignetteMeta"),
   vignetteName: document.querySelector("#vignetteName"),
@@ -230,7 +217,11 @@ function defaultState() {
     phase: "eu",
     euIndex: 0,
     euAnswers: {},
-    checklist: {},
+    valueIndex: 0,
+    valueChoices: {},
+    valueNotes: {},
+    scoringVersion: SCORING_VERSION,
+    deliveryMode: "",
     selectedVignette: VIGNETTES[0].id,
     vignetteStatus: Object.fromEntries(VIGNETTES.map((item) => [item.id, "todo"])),
     vignetteNotes: Object.fromEntries(VIGNETTES.map((item) => [item.id, ""])),
@@ -240,7 +231,23 @@ function defaultState() {
 
 function loadState() {
   try {
-    return { ...defaultState(), ...(JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}) };
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    const next = { ...defaultState(), ...saved };
+    if (next.phase === "checklist") next.phase = "values";
+    next.valueIndex = Number.isInteger(next.valueIndex) ? Math.max(0, Math.min(VALUE_TRADEOFFS.length - 1, next.valueIndex)) : 0;
+    next.valueChoices = {};
+    next.valueNotes = {};
+    VALUE_TRADEOFFS.forEach((item) => {
+      const choice = saved.valueChoices?.[item.id];
+      if (saved.scoringVersion === SCORING_VERSION && VALUE_POSITIONS.includes(choice)) next.valueChoices[item.id] = choice;
+      next.valueNotes[item.id] = typeof saved.valueNotes?.[item.id] === "string" ? saved.valueNotes[item.id] : "";
+    });
+    next.scoringVersion = SCORING_VERSION;
+    next.deliveryMode = ["build", "adapt", "buy"].includes(saved.deliveryMode) ? saved.deliveryMode : "";
+    next.vignetteStatus = { ...defaultState().vignetteStatus, ...(saved.vignetteStatus || {}) };
+    next.vignetteNotes = { ...defaultState().vignetteNotes, ...(saved.vignetteNotes || {}) };
+    if (!VIGNETTES.some((item) => item.id === next.selectedVignette)) next.selectedVignette = VIGNETTES[0].id;
+    return next;
   } catch {
     return defaultState();
   }
@@ -255,6 +262,24 @@ function saveState() {
 }
 
 function init() {
+  renderValueKnowledge();
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest('a[href^="#waarde-"]');
+    if (!link) return;
+    event.preventDefault();
+    if (state.view === "tool") dom.returnToValues.hidden = false;
+    history.pushState(null, "", link.getAttribute("href"));
+    openKnowledgeFromHash();
+  });
+  dom.returnToValues.addEventListener("click", () => {
+    state.view = "tool";
+    state.phase = "values";
+    history.replaceState(null, "", location.pathname + location.search);
+    saveState();
+    render();
+    document.querySelector("#valueQuestion").focus();
+  });
+  window.addEventListener("hashchange", openKnowledgeFromHash);
   document.querySelectorAll("[data-start-tool]").forEach((button) => {
     button.addEventListener("click", () => {
       state.view = "tool";
@@ -311,6 +336,7 @@ function init() {
   });
 
   render();
+  openKnowledgeFromHash();
 }
 
 function goRelativePhase(direction) {
@@ -325,7 +351,7 @@ function render() {
   renderViews();
   renderPhases();
   renderQuestion();
-  renderChecklist();
+  renderValues();
   renderVignettes();
   renderSurvey();
   renderReport();
@@ -377,7 +403,7 @@ function renderQuestion() {
       if (state.euIndex < EU_QUESTIONS.length - 1) {
         state.euIndex += 1;
       } else {
-        state.phase = "checklist";
+        state.phase = "values";
       }
       saveState();
       render();
@@ -392,34 +418,156 @@ function renderQuestion() {
   }).join("");
 }
 
-function renderChecklist() {
-  dom.checklistGrid.innerHTML = CHECKLIST.map((item) => `
-    <article class="row-question">
-      <div>
-        <h3>${item.title}</h3>
-        <p>${item.help}</p>
-      </div>
-      <div class="segmented">
-        ${SCORE_OPTIONS.map(([value, label]) => {
-          const active = state.checklist[item.id] === value ? " active" : "";
-          return `<button class="segment${active}" type="button" data-checklist="${item.id}" data-value="${value}">${label}</button>`;
-        }).join("")}
-      </div>
-    </article>
-  `).join("");
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+}
 
-  dom.checklistGrid.querySelectorAll("[data-checklist]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.checklist[button.dataset.checklist] = button.dataset.value;
-      saveState();
-      renderChecklist();
-      renderReport();
-    });
+function valueLabel(item) {
+  const choice = state.valueChoices[item.id];
+  if (!VALUE_POSITIONS.includes(choice)) return "Nog open";
+  const strength = ["", "Lichte", "Duidelijke", "Sterke"][Math.abs(choice)];
+  return `${strength} voorkeur voor ${(choice < 0 ? item.left : item.right).toLowerCase()}`;
+}
+
+function valueEffect(item) {
+  const choice = state.valueChoices[item.id];
+  if (choice === undefined) return "Kies een richting om de mogelijke gevolgen te verkennen. Je kunt dit ook openlaten voor het gesprek.";
+  return item.effects[choice < 0 ? 0 : 2];
+}
+
+function normContributions(item) {
+  const choice = state.valueChoices[item.id];
+  if (!VALUE_POSITIONS.includes(choice)) return [];
+  return NORM_LINKS[item.id][choice < 0 ? "left" : "right"].map((link) => ({ ...link, points: Math.abs(choice), tradeoff: item.title, id: item.id }));
+}
+
+function getNormProfile() {
+  return NORMS.map((norm) => {
+    const relevant = VALUE_TRADEOFFS.filter((item) => [...NORM_LINKS[item.id].left, ...NORM_LINKS[item.id].right].some((link) => link.norm === norm.id));
+    const contributions = VALUE_TRADEOFFS.flatMap(normContributions).filter((entry) => entry.norm === norm.id);
+    const answered = relevant.filter((item) => VALUE_POSITIONS.includes(state.valueChoices[item.id])).length;
+    return { ...norm, contributions, points: contributions.reduce((sum, entry) => sum + entry.points, 0), maximum: relevant.length * 3, open: relevant.length - answered };
   });
+}
 
-  const summary = getChecklistSummary();
-  dom.checklistScore.textContent = summary.label;
-  dom.checklistSummary.textContent = summary.text;
+function currentNormHtml(item) {
+  const contributions = normContributions(item);
+  if (!contributions.length) return "";
+  return `<p><strong>Extra ontwerpaandacht:</strong> ${contributions.map((entry) => `${escapeHtml(NORMS.find((norm) => norm.id === entry.norm).title)} (+${entry.points})`).join(" · ")}</p><p class="muted-note">${Math.abs(state.valueChoices[item.id])} punt(en) per gekoppelde norm. De punten drukken de sterkte van je voorkeur uit, niet hoe goed of slecht die keuze is.</p>`;
+}
+
+function renderValues() {
+  const item = VALUE_TRADEOFFS[state.valueIndex];
+  dom.valueNavigation.innerHTML = VALUE_TRADEOFFS.map((entry, index) => `<button type="button" class="chip${index === state.valueIndex ? " active" : ""}" data-value-index="${index}" aria-label="${index + 1}. ${escapeHtml(entry.title)}${state.valueChoices[entry.id] !== undefined ? ", keuze vastgelegd" : ", nog open"}" ${index === state.valueIndex ? 'aria-current="step"' : ""}>${index + 1}${state.valueChoices[entry.id] !== undefined ? " ✓" : ""}</button>`).join("");
+  dom.valueNavigation.querySelectorAll("[data-value-index]").forEach((button) => button.addEventListener("click", () => selectValue(Number(button.dataset.valueIndex))));
+  dom.valueCard.innerHTML = `
+    <p class="kicker">Afweging ${state.valueIndex + 1} van ${VALUE_TRADEOFFS.length} · ${escapeHtml(item.title)}</p>
+    <h3 id="valueQuestion" tabindex="-1">${escapeHtml(item.question)}</h3>
+    <p>${escapeHtml(item.context)}</p>
+    <p class="value-example"><strong>Bijvoorbeeld:</strong> ${escapeHtml(item.example)}</p>
+    <div class="value-scale${state.valueChoices[item.id] === undefined ? " unanswered" : ""}" id="valueScale">
+      <label for="valueSlider" class="value-note-label">Welke kant krijgt voorrang?</label>
+      <div class="scale-poles"><strong>${escapeHtml(item.left)}</strong><strong>${escapeHtml(item.right)}</strong></div>
+      <input type="range" id="valueSlider" min="0" max="5" step="1" value="${Math.max(0, VALUE_POSITIONS.indexOf(state.valueChoices[item.id]) >= 0 ? VALUE_POSITIONS.indexOf(state.valueChoices[item.id]) : 2)}" aria-describedby="sliderHint sliderChoice" aria-valuetext="${escapeHtml(valueLabel(item))}">
+      <div class="scale-ticks" aria-hidden="true"><span>Sterk</span><span>Duidelijk</span><span>Licht</span><span>Licht</span><span>Duidelijk</span><span>Sterk</span></div>
+      <p id="sliderHint" class="muted-note">Zes standen, zonder midden. Klik, sleep of gebruik de pijltjestoetsen. Een keuze telt pas nadat je de schuifregelaar gebruikt.</p>
+      <output id="sliderChoice" for="valueSlider" aria-live="polite">${escapeHtml(valueLabel(item))}</output>
+    </div>
+    <div class="value-consequence" aria-live="polite"><strong>Wat kan deze keuze betekenen?</strong><p id="valueEffect">${escapeHtml(valueEffect(item))}</p><div id="currentNorms">${currentNormHtml(item)}</div></div>
+    ${item.id === "beheer" ? `<fieldset class="delivery-options"><legend>Hoe wil je dit uitvoeren? <span>(optioneel, los van de punten)</span></legend>${[["build", "Zelf bouwen"], ["adapt", "Bestaande oplossing aanpassen"], ["buy", "Inkopen"]].map(([id, label]) => `<label><input type="radio" name="delivery-mode" value="${id}" ${state.deliveryMode === id ? "checked" : ""}> ${label}</label>`).join("")}</fieldset>` : ""}
+    <label class="value-note-label" for="valueNote">Waarom past dit? Wie kan nadeel ervaren en wat doe je daarmee? <span>(optioneel)</span></label>
+    <textarea id="valueNote" rows="3" placeholder="Een paar zinnen is genoeg. Noteer eventueel wat nog uitgezocht moet worden.">${escapeHtml(state.valueNotes[item.id] || "")}</textarea>
+    <div class="value-links"><a href="#waarde-${item.id}" data-open-knowledge>Verdiep deze afweging in de kennisbank →</a><button type="button" class="small-button ghost" id="clearValue">Keuze openlaten</button></div>
+    <div class="phase-actions"><button type="button" class="small-button" id="previousValue" ${state.valueIndex === 0 ? "disabled" : ""}>← Vorige afweging</button><button type="button" class="small-button primary" id="nextValue">${state.valueIndex === VALUE_TRADEOFFS.length - 1 ? "Verder naar de casussen →" : "Volgende afweging →"}</button></div>`;
+  const slider = document.querySelector("#valueSlider");
+  const updateChoice = () => {
+    state.valueChoices[item.id] = VALUE_POSITIONS[Number(slider.value)];
+    saveState();
+    slider.setAttribute("aria-valuetext", valueLabel(item));
+    document.querySelector("#sliderChoice").textContent = valueLabel(item);
+    document.querySelector("#valueScale").classList.remove("unanswered");
+    document.querySelector("#valueEffect").textContent = valueEffect(item);
+    document.querySelector("#currentNorms").innerHTML = currentNormHtml(item);
+    renderValueProgress();
+    renderReport();
+  };
+  slider.addEventListener("input", updateChoice);
+  slider.addEventListener("pointerup", updateChoice);
+  slider.addEventListener("keydown", (event) => {
+    if (["Enter", " "].includes(event.key)) { event.preventDefault(); updateChoice(); }
+  });
+  dom.valueCard.querySelectorAll('[name="delivery-mode"]').forEach((input) => input.addEventListener("change", () => { state.deliveryMode = input.value; saveState(); renderReport(); }));
+  document.querySelector("#valueNote").addEventListener("input", (event) => {
+    state.valueNotes[item.id] = event.target.value;
+    saveState();
+    renderValueProgress();
+    renderReport();
+  });
+  document.querySelector("#clearValue").addEventListener("click", () => {
+    delete state.valueChoices[item.id];
+    saveState();
+    renderValues();
+    renderReport();
+    document.querySelector("#clearValue").focus();
+  });
+  document.querySelector("#previousValue").addEventListener("click", () => selectValue(state.valueIndex - 1));
+  document.querySelector("#nextValue").addEventListener("click", () => {
+    if (state.valueIndex < VALUE_TRADEOFFS.length - 1) selectValue(state.valueIndex + 1);
+    else goRelativePhase(1);
+  });
+  renderValueProgress();
+}
+
+function selectValue(index) {
+  state.valueIndex = index;
+  saveState();
+  renderValues();
+  document.querySelector("#valueQuestion").focus();
+}
+
+function renderValueProgress() {
+  const summary = getValuesSummary();
+  dom.valuesProgress.textContent = `${summary.answered}/${VALUE_TRADEOFFS.length}`;
+  dom.valuesSummary.textContent = summary.text;
+  dom.valueNavigation.querySelectorAll("[data-value-index]").forEach((button) => {
+    const index = Number(button.dataset.valueIndex);
+    const item = VALUE_TRADEOFFS[index];
+    const answered = state.valueChoices[item.id] !== undefined;
+    button.textContent = `${index + 1}${answered ? " ✓" : ""}`;
+    button.setAttribute("aria-label", `${index + 1}. ${item.title}, ${answered ? "keuze vastgelegd" : "nog open"}`);
+  });
+}
+
+function renderValueKnowledge() {
+  dom.valueKnowledge.innerHTML = `<h2>Waarden in de praktijk</h2><p>Deze afwegingen zijn gespreksvragen, geen vaste rangorde van waarden. Gebruik de voorbeelden en mogelijke uitwerkingen om een passende aanpak te bespreken.</p><nav class="knowledge-index" aria-label="Waarden in de kennisbank">${VALUE_TRADEOFFS.map((item) => `<a href="#waarde-${item.id}">${escapeHtml(item.title)}</a>`).join("")}</nav>` + VALUE_TRADEOFFS.map((item) => `<article id="waarde-${item.id}" class="knowledge-article" tabindex="-1"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.context)}</p><p><strong>Voorbeeld:</strong> ${escapeHtml(item.example)}</p><h4>Mogelijke gevolgen van de richting</h4><ul>${item.effects.map((effect) => `<li>${escapeHtml(effect)}</li>`).join("")}</ul><h4>Mogelijke uitwerkingen</h4><ul>${item.actions.map((action) => `<li>${escapeHtml(action)}</li>`).join("")}</ul><p class="value-consequence"><strong>Aandachtspunt:</strong> ${escapeHtml(item.guardrail)}</p><button type="button" class="small-button" data-weigh="${item.id}">Bespreek deze afweging →</button></article>`).join("");
+  dom.valueKnowledge.querySelectorAll("[data-weigh]").forEach((button) => button.addEventListener("click", () => {
+    state.valueIndex = VALUE_TRADEOFFS.findIndex((item) => item.id === button.dataset.weigh);
+    dom.returnToValues.click();
+  }));
+  dom.valueKnowledge.insertAdjacentHTML("afterbegin", `<section class="hierarchy"><p class="kicker">Waarde → normen → ontwerpmaatregelen</p><h2>Menselijke maat in het ontwerp</h2><p>De waardenhiërarchie uit het tussentijdsrapport (hoofdstuk 3, figuur 3.1) onderscheidt vier normen. De acht afwegingen uit hoofdstuk 4 laten zien waar die normen kunnen schuren.</p><div class="norm-grid">${NORMS.map((norm) => `<article><p class="kicker">${escapeHtml(norm.sourceTitle)}</p><h3>${escapeHtml(norm.title)}</h3><p>${escapeHtml(norm.description)}</p><p><strong>Ontwerpmaatregel:</strong> ${escapeHtml(norm.action)}</p></article>`).join("")}</div>${scoringExplanation()}</section>`);
+  VALUE_TRADEOFFS.forEach((item) => {
+    document.querySelector(`#waarde-${item.id}`).insertAdjacentHTML("beforeend", `<details class="norm-mapping"><summary>Koppeling aan de normen en punten</summary>${["left", "right"].map((side) => `<h4>Bij meer nadruk op ${(side === "left" ? item.left : item.right).toLowerCase()}</h4><ul>${NORM_LINKS[item.id][side].map((link) => `<li><strong>${escapeHtml(NORMS.find((norm) => norm.id === link.norm).title)}:</strong> ${escapeHtml(link.reason)} ${escapeHtml(link.action)}</li>`).join("")}</ul>`).join("")}<p>Elke genoemde norm krijgt 1, 2 of 3 aandachtspunten bij een lichte, duidelijke of sterke voorkeur voor deze kant. Dit is een redactionele vertaling om te beproeven in de praktijk.</p></details>`);
+  });
+}
+
+function scoringExplanation() {
+  return `<details class="scoring-method"><summary>Hoe worden de aandachtspunten berekend?</summary><p>De zes standen zijn −3, −2, −1, +1, +2 en +3. Het teken geeft de kant aan; de grootte geeft 1, 2 of 3 punten aan iedere norm die bij die kant extra ontwerpaandacht vraagt. Er worden geen punten afgetrokken: zorgen kunnen elkaar niet wegstrepen.</p><p>Per norm tellen we de punten op. Het maximum is drie maal het aantal afwegingen dat aan die norm kan raken. De maxima verschillen; vergelijk de ruwe aantallen daarom niet als een ranglijst. Open vragen tellen niet als nul: ze staan apart vermeld en maken het profiel voorlopig.</p><p>De uitkomst is geen rapportcijfer, risicokans of bewijs dat aan een norm is voldaan. De vier normen en het speelveld komen uit het tussentijdsrapport; de koppelingen en de weging 1–3 zijn een nieuwe, nog niet gevalideerde ontwerpkeuze (${SCORING_VERSION}). Alle vier de normen blijven van belang, ook bij nul extra punten. Maatregelen verdienen geen aftrekpunten; hun werking moet je in de praktijk toetsen.</p></details>`;
+}
+
+function normProfileHtml() {
+  const summary = getValuesSummary();
+  return `<h3>${summary.open.length ? "Voorlopig aandachtsprofiel" : "Aandachtsprofiel bij je keuzes"}</h3><p>${summary.label}. De punten helpen om ontwerpaandacht te verdelen over de vier normen. Ze beoordelen niet of een keuze goed of fout is.</p><div class="norm-grid">${getNormProfile().map((norm) => `<article><h4>${escapeHtml(norm.title)}</h4><p class="norm-points">${norm.points} <span>van ${norm.maximum} mogelijke aandachtspunten</span></p><p>${norm.open ? `${norm.open} relevante afweging(en) nog open; de uitkomst is voorlopig.` : "Alle relevante afwegingen ingevuld."}</p><p><strong>Basismaatregel:</strong> ${escapeHtml(norm.action)}</p><details><summary>Waarom deze punten en wat kun je doen?</summary>${norm.contributions.length ? `<ul>${norm.contributions.map((entry) => `<li><strong>${escapeHtml(entry.tradeoff)}: +${entry.points}.</strong> ${escapeHtml(entry.reason)}<br><strong>Ontwerpmaatregel:</strong> ${escapeHtml(entry.action)} <a href="#waarde-${entry.id}">Verdieping</a></li>`).join("")}</ul>` : "<p>Uit de ingevulde keuzes volgt nog geen extra aandachtspunt voor deze norm. Dat zegt niet of de norm geborgd is.</p>"}</details></article>`).join("")}</div>${scoringExplanation()}`;
+}
+
+function openKnowledgeFromHash() {
+  const item = VALUE_TRADEOFFS.find((entry) => location.hash === `#waarde-${entry.id}`);
+  if (!item) return;
+  state.view = "knowledge";
+  saveState();
+  renderViews();
+  const article = document.querySelector(`#waarde-${item.id}`);
+  article.scrollIntoView({ block: "start" });
+  article.focus({ preventScroll: true });
 }
 
 function renderVignettes() {
@@ -498,8 +646,11 @@ function renderSurvey() {
   dom.surveySummary.textContent = summary.text;
 }
 
-function getChecklistSummary() {
-  return getScoreSummary(CHECKLIST, state.checklist, "checklist");
+function getValuesSummary() {
+  const open = VALUE_TRADEOFFS.filter((item) => state.valueChoices[item.id] === undefined);
+  const answered = VALUE_TRADEOFFS.length - open.length;
+  const notes = VALUE_TRADEOFFS.filter((item) => state.valueNotes[item.id]?.trim()).length;
+  return { answered, open, label: `${answered}/${VALUE_TRADEOFFS.length} keuzes vastgelegd`, text: `${answered} keuzes vastgelegd, ${open.length} nog open en ${notes} toelichtingen. ${open.length ? "Het aandachtsprofiel is voorlopig." : "Bekijk in het rapport welke normen extra ontwerpaandacht vragen."}` };
 }
 
 function getSurveySummary() {
@@ -547,27 +698,31 @@ function classifyRoute() {
   const risks = [];
   if (answers.prohibited === "yes") risks.push("Mogelijk verboden praktijk");
   if (answers.prohibited === "maybe") risks.push("Juridische onzekerheid over verboden praktijk");
-  if (answers.rights !== "no" || answers.purpose === "decision") risks.push("Impact op rechten of toegang");
+  if (["yes", "maybe"].includes(answers.rights) || answers.purpose === "decision") risks.push("Impact op rechten of toegang");
   if (answers.data === "sensitive") risks.push("Kwetsbare of bijzondere data");
   if (answers.human === "weak") risks.push("Menselijk toezicht is zwak");
-  if (answers.procurement !== "ready") risks.push("AI-afspraken zijn nog niet volledig");
+  if (["partial", "none"].includes(answers.procurement)) risks.push("AI-afspraken zijn nog niet volledig");
 
-  const route = answers.prohibited === "yes" ? "Stop en herontwerp" : risks.length >= 3 ? "Verzwaarde waarborgen" : "Beheerst verder verkennen";
+  const incomplete = EU_QUESTIONS.some((question) => !question.options.some(([value]) => value === answers[question.id]));
+  const route = answers.prohibited === "yes" ? "Stop en herontwerp" : answers.prohibited === "maybe" ? "Eerst juridisch toetsen" : incomplete ? "Nog niet bepaald: EU-vragen staan open" : risks.length >= 3 ? "Verzwaarde waarborgen" : "Beheerst verder verkennen";
   return { route, risks };
 }
 
 function buildRecommendations() {
   const { route, risks } = classifyRoute();
-  const checklist = getChecklistSummary();
+  const values = getValuesSummary();
   const survey = getSurveySummary();
   const recommendations = [];
+
+  if (route.startsWith("Nog niet bepaald")) recommendations.push("Vul de EU-vragen aan om de juridische en bestuurlijke aandachtspunten te verkennen.");
+  if (route === "Eerst juridisch toetsen") recommendations.push("Bespreek de onzekerheid over een mogelijk verboden praktijk met een juridisch deskundige.");
 
   if (route === "Stop en herontwerp") {
     recommendations.push("Stop de huidige ontwerpkeuze en laat eerst juridisch toetsen of er sprake is van een verboden AI-praktijk.");
   }
 
   if (risks.includes("Impact op rechten of toegang")) {
-    recommendations.push("Leg vast waar menselijke controle, bezwaar, herstel en uitleg beschikbaar zijn voor inwoners.");
+    recommendations.push("Leg vast waar menselijke controle, bezwaar, herstel en uitleg beschikbaar zijn voor burgers.");
   }
 
   if (risks.includes("Kwetsbare of bijzondere data")) {
@@ -578,16 +733,18 @@ function buildRecommendations() {
     recommendations.push("Maak inkoopafspraken over auditrechten, logging, modelwijzigingen, incidenten en dataverwerking.");
   }
 
-  if (checklist.weak.length) {
-    recommendations.push(`Werk deze punten uit de checklist verder uit: ${checklist.weak.slice(0, 2).join(", ")}.`);
+  if (values.open.length) {
+    recommendations.push(`Bespreek de nog open waardenafwegingen: ${values.open.map((item) => item.title).join(", ")}.`);
   }
+  const withoutNotes = VALUE_TRADEOFFS.filter((item) => state.valueChoices[item.id] !== undefined && !state.valueNotes[item.id]?.trim());
+  if (withoutNotes.length) recommendations.push(`Licht in het gesprek de reden en gevolgen toe bij: ${withoutNotes.map((item) => item.title).join(", ")}.`);
 
   if (survey.weak.length) {
     recommendations.push(`Onderzoek deze burgerperspectieven extra: ${survey.weak.slice(0, 2).join(", ")}.`);
   }
 
   if (!recommendations.length) {
-    recommendations.push("De basis oogt werkbaar. Blijf meten of de toepassing voor inwoners echt begrijpelijker, menselijker en makkelijker wordt.");
+    recommendations.push("De basis oogt werkbaar. Blijf meten of de toepassing voor burgers echt begrijpelijker, menselijker en makkelijker wordt.");
   }
 
   return recommendations;
@@ -595,7 +752,7 @@ function buildRecommendations() {
 
 function renderReport() {
   const { route, risks } = classifyRoute();
-  const checklist = getChecklistSummary();
+  const values = getValuesSummary();
   const survey = getSurveySummary();
   const recommendations = buildRecommendations();
 
@@ -603,7 +760,15 @@ function renderReport() {
     <article class="report-block">
       <h3>Samenvatting</h3>
       <p><strong>Route:</strong> ${route}</p>
-      <p><strong>Checklist:</strong> ${checklist.label} · <strong>Burgerperspectief:</strong> ${survey.label}</p>
+      <p><strong>Waardenafweging:</strong> ${values.label} · <strong>Burgerperspectief:</strong> ${survey.label}</p>
+    </article>
+    <article class="report-block">
+      ${normProfileHtml()}
+    </article>
+    <article class="report-block">
+      <h3>Keuzes om samen te bespreken</h3>
+      <p>${values.text}</p>
+      ${VALUE_TRADEOFFS.map((item) => `<details class="value-report"><summary>${escapeHtml(item.title)} — ${escapeHtml(valueLabel(item))}</summary><p>${escapeHtml(valueEffect(item))}</p><p><strong>Toelichting:</strong> ${escapeHtml(state.valueNotes[item.id]?.trim() || "Nog niet toegelicht")}</p><a href="#waarde-${item.id}">Bekijk de mogelijke uitwerkingen in de kennisbank →</a></details>`).join("")}
     </article>
     <article class="report-block">
       <h3>Belangrijkste risico's</h3>
@@ -630,9 +795,22 @@ function tableRows(items, answers) {
     .join("\n");
 }
 
+function markdownText(value) {
+  return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/\\/g, "\\\\").replace(/([`*_{}\[\]()#+.!|~-])/g, "\\$1").replace(/\r?\n/g, "<br>");
+}
+
+function valuesMarkdown() {
+  return VALUE_TRADEOFFS.map((item) => `### ${item.title}\n\n- Richting: ${valueLabel(item)}\n- Positie op de schaal: ${state.valueChoices[item.id] === undefined ? "Nog open" : state.valueChoices[item.id]}\n- Mogelijke gevolgen: ${valueEffect(item)}\n- Eigen toelichting: ${markdownText(state.valueNotes[item.id]?.trim() || "Nog niet toegelicht")}\n- Mogelijke uitwerkingen: ${item.actions.join(" ")}\n- Aandachtspunt: ${item.guardrail}\n${item.id === "beheer" ? `- Uitvoering: ${{build: "Zelf bouwen", adapt: "Bestaande oplossing aanpassen", buy: "Inkopen"}[state.deliveryMode] || "Nog open"} (los van de punten)\n` : ""}- [Verdieping in de kennisbank](${KNOWLEDGE_URL}#waarde-${item.id})`).join("\n\n");
+}
+
+function normProfileMarkdown() {
+  return `### ${getValuesSummary().open.length ? "Voorlopig aandachtsprofiel" : "Aandachtsprofiel"}\n\nWaarde: menselijke maat. De vier normen vertalen we hieronder naar ontwerpmaatregelen.\n\n` + getNormProfile().map((norm) => `#### ${norm.title}\n\n${norm.points} van ${norm.maximum} mogelijke aandachtspunten; ${norm.open} relevante afweging(en) nog open.\n\nBasismaatregel: ${norm.action}\n\n${norm.contributions.length ? norm.contributions.map((entry) => `- ${entry.tradeoff}: +${entry.points}. ${entry.reason} Ontwerpmaatregel: ${entry.action}`).join("\n") : "Nog geen extra punten uit de ingevulde keuzes; dit zegt niet of de norm geborgd is."}`).join("\n\n") + `\n\n#### Verantwoording van de puntentelling\n\nLichte, duidelijke en sterke voorkeuren geven 1, 2 en 3 aandachtspunten aan elke gekoppelde norm. Punten tellen op en strepen elkaar niet weg. Het maximum per norm is drie maal het aantal mogelijk relevante afwegingen. Vergelijk de ruwe aantallen niet als ranglijst: de maxima verschillen. Open vragen worden apart geteld en maken het profiel voorlopig. Alle normen blijven van belang, ook bij nul punten. Maatregelen verlagen de punten niet; hun werking vraagt toetsing in de praktijk.\n\nBron: aangeleverd tussentijdsrapport, hoofdstuk 3 (figuur 3.1) en hoofdstuk 4 (figuur 4.2). De koppelingen en weging zijn een nieuwe, niet gevalideerde ontwerpkeuze (${SCORING_VERSION}), geen rapportcijfer, risicokans of bewijs van naleving.\n\n`;
+}
+
 function buildMarkdown() {
   const { route, risks } = classifyRoute();
-  const checklist = getChecklistSummary();
+  const values = getValuesSummary();
   const survey = getSurveySummary();
   const recommendations = buildRecommendations();
 
@@ -640,7 +818,7 @@ function buildMarkdown() {
   const vignetteRows = VIGNETTES.map((item) => {
     const status = VIGNETTE_STATUS.find(([value]) => value === state.vignetteStatus[item.id]);
     const note = state.vignetteNotes[item.id]?.trim() || "Geen notitie";
-    return `| ${item.title} | ${status ? status[1] : "Nog niet besproken"} | ${note} |`;
+    return `| ${item.title} | ${status ? status[1] : "Nog niet besproken"} | ${markdownText(note)} |`;
   }).join("\n");
 
   return `# Menselijke Maat AI Verkenner
@@ -650,10 +828,10 @@ function buildMarkdown() {
 | Onderdeel | Uitkomst |
 | --- | --- |
 | Route | ${route} |
-| Checklist menselijke maat | ${checklist.label} |
+| Waardenafweging | ${values.label} |
 | Burgerperspectief | ${survey.label} |
 
-## 2. EU-regels en governance
+## 2. EU-regels en verantwoordelijkheden
 
 | Vraag | Antwoord |
 | --- | --- |
@@ -663,17 +841,17 @@ ${euRows}
 
 ${(risks.length ? risks : ["Geen grote rode vlaggen ingevuld."]).map((item) => `- ${item}`).join("\n")}
 
-## 4. Checklist menselijke maat
+## 4. Waardenafweging
 
-${checklist.text}
+${values.text}
 
-| Vraag | Beoordeling |
-| --- | --- |
-${tableRows(CHECKLIST, state.checklist)}
+${normProfileMarkdown()}
 
-## 5. Worst-case users
+${valuesMarkdown()}
 
-| Vignette | Status | Notitie |
+## 5. Ongeziene burgers
+
+| Casus | Status | Notitie |
 | --- | --- | --- |
 ${vignetteRows}
 
