@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="1594" viewBox="0 0 620 1594" role="img" aria-labelledby="title desc">
+<title id="title">Waardenhiërarchie van de menselijke maat</title>
+<desc id="desc">Menselijke maat is de waarde. Vier normen verbinden die waarde aan ontwerpkeuzes: luisteren en bijsturen, begrijpen en betwisten, aansluiten op de leefwereld en eenvoud. Voorbeelden zijn burgers laten meedenken, herbeoordeling bereikbaar maken, passende ondersteuning bieden en bewijsstukken beperken.</desc>
+<rect width="620" height="1594" rx="24" fill="#fffaf4"/>
+<rect x="40" y="28" width="540" height="128" rx="20" fill="#064f3a"/>
+<text x="68" y="62" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#c5dec7"><tspan x="68" dy="0">WAARDE</tspan></text>
+<text x="68" y="104" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#ffffff"><tspan x="68" dy="0">Menselijke maat</tspan></text>
+<text x="68" y="135" font-family="Arial, sans-serif" font-size="22" font-weight="400" fill="#eaf2e8"><tspan x="68" dy="0">Een rechtvaardig en begrijpelijk proces</tspan></text>
+<path d="M64 156V1280" stroke="#6aa46f" stroke-width="3" fill="none"/><path d="M64 248H92" stroke="#6aa46f" stroke-width="3"/><circle cx="64" cy="248" r="6" fill="#064f3a"/>
+<rect x="92" y="200" width="488" height="300" rx="18" fill="#fffefd" stroke="#bad1bd"/>
+<path d="M110 200H562Q580 200 580 218V323H92V218Q92 200 110 200" fill="#eaf2e8"/>
+<text x="118" y="229" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#2e7653"><tspan x="118" dy="0">NORM</tspan></text>
+<text x="118" y="262" font-family="Georgia, serif" font-size="25" font-weight="700" fill="#064f3a"><tspan x="118" dy="0">Luisteren en bijsturen</tspan></text>
+<text x="118" y="294" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#364c40"><tspan x="118" dy="0">Signalen van burgers werken door in het ontwerp.</tspan></text>
+<text x="118" y="362" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#2e7653"><tspan x="118" dy="0">ONTWERPKEUZES</tspan></text>
+<circle cx="124" cy="394" r="3.5" fill="#6aa46f"/><text x="138" y="401" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Burgers laten meedenken</tspan></text><circle cx="124" cy="428" r="3.5" fill="#6aa46f"/><text x="138" y="435" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Ontwerpkeuzes uitleggen</tspan></text><circle cx="124" cy="462" r="3.5" fill="#6aa46f"/><text x="138" y="469" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Op signalen reageren</tspan></text><path d="M64 592H92" stroke="#6aa46f" stroke-width="3"/><circle cx="64" cy="592" r="6" fill="#064f3a"/>
+<rect x="92" y="544" width="488" height="300" rx="18" fill="#fffefd" stroke="#bad1bd"/>
+<path d="M110 544H562Q580 544 580 562V667H92V562Q92 544 110 544" fill="#eaf2e8"/>
+<text x="118" y="573" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#2e7653"><tspan x="118" dy="0">NORM</tspan></text>
+<text x="118" y="606" font-family="Georgia, serif" font-size="25" font-weight="700" fill="#064f3a"><tspan x="118" dy="0">Begrijpen en betwisten</tspan></text>
+<text x="118" y="638" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#364c40"><tspan x="118" dy="0">Een uitkomst kunnen volgen en laten herzien.</tspan></text>
+<text x="118" y="706" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#2e7653"><tspan x="118" dy="0">ONTWERPKEUZES</tspan></text>
+<circle cx="124" cy="738" r="3.5" fill="#6aa46f"/><text x="138" y="745" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Besluitstappen inzichtelijk maken</tspan></text><circle cx="124" cy="772" r="3.5" fill="#6aa46f"/><text x="138" y="779" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Herbeoordeling bereikbaar maken</tspan></text><circle cx="124" cy="806" r="3.5" fill="#6aa46f"/><text x="138" y="813" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Sturende drempels vermijden</tspan></text><path d="M64 936H92" stroke="#6aa46f" stroke-width="3"/><circle cx="64" cy="936" r="6" fill="#064f3a"/>
+<rect x="92" y="888" width="488" height="300" rx="18" fill="#fffefd" stroke="#bad1bd"/>
+<path d="M110 888H562Q580 888 580 906V1011H92V906Q92 888 110 888" fill="#eaf2e8"/>
+<text x="118" y="917" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#2e7653"><tspan x="118" dy="0">NORM</tspan></text>
+<text x="118" y="950" font-family="Georgia, serif" font-size="25" font-weight="700" fill="#064f3a"><tspan x="118" dy="0">Aansluiten op de leefwereld</tspan></text>
+<text x="118" y="982" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#364c40"><tspan x="118" dy="0">Rekening houden met wat iemand nodig heeft en kan.</tspan></text>
+<text x="118" y="1050" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#2e7653"><tspan x="118" dy="0">ONTWERPKEUZES</tspan></text>
+<circle cx="124" cy="1082" r="3.5" fill="#6aa46f"/><text x="138" y="1089" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Persoonlijke toelichting toelaten</tspan></text><circle cx="124" cy="1116" r="3.5" fill="#6aa46f"/><text x="138" y="1123" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Passende ondersteuning bieden</tspan></text><circle cx="124" cy="1150" r="3.5" fill="#6aa46f"/><text x="138" y="1157" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Ervaringen vertalen naar het proces</tspan></text><path d="M64 1280H92" stroke="#6aa46f" stroke-width="3"/><circle cx="64" cy="1280" r="6" fill="#064f3a"/>
+<rect x="92" y="1232" width="488" height="300" rx="18" fill="#fffefd" stroke="#bad1bd"/>
+<path d="M110 1232H562Q580 1232 580 1250V1355H92V1250Q92 1232 110 1232" fill="#eaf2e8"/>
+<text x="118" y="1261" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#2e7653"><tspan x="118" dy="0">NORM</tspan></text>
+<text x="118" y="1294" font-family="Georgia, serif" font-size="25" font-weight="700" fill="#064f3a"><tspan x="118" dy="0">Eenvoudig en toegankelijk</tspan></text>
+<text x="118" y="1326" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#364c40"><tspan x="118" dy="0">Weinig onnodige stappen, bewijslast en voorkennis.</tspan></text>
+<text x="118" y="1394" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#2e7653"><tspan x="118" dy="0">ONTWERPKEUZES</tspan></text>
+<circle cx="124" cy="1426" r="3.5" fill="#6aa46f"/><text x="138" y="1433" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Bewijsstukken beperken</tspan></text><circle cx="124" cy="1460" r="3.5" fill="#6aa46f"/><text x="138" y="1467" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Handelingen verminderen</tspan></text><circle cx="124" cy="1494" r="3.5" fill="#6aa46f"/><text x="138" y="1501" font-family="Arial, sans-serif" font-size="21" font-weight="400" fill="#21322d"><tspan x="138" dy="0">Uitleg met burgers toetsen</tspan></text></svg>

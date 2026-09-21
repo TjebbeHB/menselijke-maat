@@ -732,6 +732,21 @@ textarea {
 .scoring-method, .norm-mapping { margin: 1.5rem 0; line-height: 1.5; }
 .scoring-method summary, .norm-mapping summary, .norm-grid summary { cursor: pointer; font-weight: 800; line-height: 1.5; }
 .hierarchy { margin-bottom: 3rem; }
+.hierarchy-figure { margin: 1.5rem 0; }
+.hierarchy-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 18px; }
+.hierarchy-figure figcaption { color: var(--muted); line-height: 1.5; margin-top: 0.8rem; }
+.hierarchy-text { margin: 1rem 0; }
+.hierarchy-text summary { cursor: pointer; color: var(--green-900); font-weight: 800; }
+.dfv-explanation { padding: clamp(1.2rem, 4vw, 2.5rem); border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+.dfv-explanation h2, .dfv-explanation h3 { line-height: 1.3; }
+.dfv-explanation h3 { margin-top: 2rem; }
+.dfv-explanation a { color: var(--green-900); text-underline-offset: 3px; }
+.hierarchy-levels { padding-left: 1.5rem; }
+.hierarchy-levels li { margin: 1.2rem 0; padding-left: 0.4rem; }
+.hierarchy-levels li::marker { color: var(--green-700); font-weight: 900; }
+.hierarchy-levels p { margin: 0.35rem 0; }
+.dfv-example { padding: 1rem 1.3rem; background: var(--green-100); border-radius: 12px; margin: 1.5rem 0; }
+.dfv-example h3 { margin-top: 0; }
 .value-consequence { background: var(--sand); padding: 1rem; border-radius: 8px; margin: 1rem 0; }
 .value-consequence p { margin-bottom: 0; }
 .value-note-label { display: block; line-height: 1.5; }

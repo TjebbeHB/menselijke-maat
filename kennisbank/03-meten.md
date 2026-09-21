@@ -24,7 +24,7 @@ Je legt cijfers naast ervaringen en onderzoekt verschillen. Dat geeft een rijker
 
 ## Meer nadruk op rechts
 
-Je geeft ervaringen en professioneel oordeel meer ruimte.
+Je geeft ervaringen en professioneel oordeel meer ruimte. Het is dan moeilijker om te toetsen of de gekozen methodiek daadwerkelijk werkt.
 
 ## Mogelijke uitwerkingen
 

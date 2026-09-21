@@ -22,7 +22,7 @@ async function main() {
     const file = path.resolve(root, '.' + (pathname === '/' ? '/index.html' : pathname));
     if (!file.startsWith(root + path.sep)) { res.writeHead(403).end(); return; }
     try {
-      res.setHeader('Content-Type', ({ '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png' })[path.extname(file)] || 'text/plain');
+      res.setHeader('Content-Type', ({ '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.svg': 'image/svg+xml' })[path.extname(file)] || 'text/plain');
       res.end(fs.readFileSync(file));
     } catch { res.writeHead(404).end(); }
   });
@@ -130,14 +130,15 @@ async function main() {
     })));
     await page.reload();
     assert.deepEqual(await page.evaluate(() => state.valueChoices), { eenvoud: -2, gelijkheid: 1, kosten: 2 });
-    assert.deepEqual(await page.evaluate(() => state.valueReview), ['meten']);
-    assert.equal(await page.locator('#valuesMigration').isVisible(), true);
+    assert.equal(await page.locator('#valuesMigration').count(), 0);
     await page.locator('[data-value-index="2"]').click();
     assert.equal(await page.locator('#valueNote').inputValue(), 'Deze toelichting moet blijven.');
     await page.locator('#valueSlider').press('End');
-    assert.equal(await page.locator('#valuesMigration').isVisible(), false);
     await page.reload();
     assert.equal(await page.evaluate(() => state.valueChoices.meten), 2);
+    await page.evaluate(() => localStorage.setItem(STORAGE_KEY, JSON.stringify({ view: 'tools' })));
+    await page.reload();
+    assert.equal(await page.locator('#knowledge').isVisible(), true);
     assert.deepEqual(errors, []);
     console.log('Geslaagd: vier standen, 32 puntenscenario’s, verborgen invulpunten, opslag, kennisbank, verslag, migratie en mobiele weergave.');
   } finally {

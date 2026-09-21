@@ -49,7 +49,7 @@ const VALUE_TRADEOFFS = [
     "effects": [
       "Je maakt prestaties vergelijkbaar en kunt patronen volgen. Het risico is dat medewerkers op de cijfers sturen en moeilijk meetbare schade buiten beeld blijft.",
       "Je legt cijfers naast ervaringen en onderzoekt verschillen. Dat geeft een rijker beeld, maar vraagt tijd om gegevens en verhalen samen te duiden.",
-      "Je geeft ervaringen en professioneel oordeel meer ruimte."
+      "Je geeft ervaringen en professioneel oordeel meer ruimte. Het is dan moeilijker om te toetsen of de gekozen methodiek daadwerkelijk werkt."
     ],
     "actions": [
       "Combineer bijvoorbeeld doorlooptijd met herhaalcontact en ervaringen van mensen die vastlopen.",

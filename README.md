@@ -8,7 +8,7 @@ Een beslisboom en kennisbank voor het bespreken en evalueren van AI in publieke 
 
 - Stap 2 bevat acht afwegingen met vier schuifstanden: sterk links, licht links, licht rechts en sterk rechts, zonder middenstand.
 - Achter de schermen geven lichte en sterke voorkeuren 1 en 2 aandachtspunten aan de gekoppelde normen. De punten verschijnen alleen in het rapport.
-- Het rapport verbindt de vier normen aan concrete ontwerpmaatregelen en toont waar de punten vandaan komen.
+- Het rapport verbindt de vier normen aan concrete ontwerpkeuzes en toont waar de punten vandaan komen.
 - Dit profiel is een redactioneel hulpmiddel, geen gevalideerde meting of totaalcijfer voor de menselijke maat. Open vragen blijven zichtbaar; tegengestelde voorkeuren heffen elkaars aandachtspunten niet op.
 - Bij publiek/privaat beheer staat de uitvoering (zelf bouwen, aanpassen, inkopen) apart van de regievraag.
 - Keuzes en toelichtingen blijven lokaal in de browser. De Markdown-uitvoer neemt het profiel, de verantwoording, keuzes en kennisbanklinks mee.

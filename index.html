@@ -25,7 +25,6 @@
       <nav class="top-nav" aria-label="Hoofdnavigatie">
         <button class="nav-link active" type="button" data-view-link="home">Over deze verkenner</button>
         <button class="nav-link" type="button" data-view-link="knowledge">Kennisbank</button>
-        <button class="nav-link" type="button" data-view-link="tools">Werkvormen</button>
       </nav>
 
       <button class="info-button" type="button" data-view-link="knowledge" aria-label="Meer informatie">i</button>
@@ -48,9 +47,6 @@
               </button>
               <button class="big-button primary" type="button" data-start-tool>
                 Menselijke Maat Verkenner <span aria-hidden="true">→</span>
-              </button>
-              <button class="big-button secondary" type="button" data-view-link="tools">
-                Werkvormen <span aria-hidden="true">→</span>
               </button>
             </div>
           </div>
@@ -86,7 +82,7 @@
             <button class="big-button warm" type="button" data-start-tool>Start de beslisboom <span aria-hidden="true">→</span></button>
             <p class="trust-line">Geen registratie nodig · voortgang blijft lokaal in deze browser</p>
           </div>
-          <img src="assets/team-table.png" alt="Illustratie van een team aan tafel" />
+          <img src="assets/team-table-framework.png" alt="Vier mensen in gesprek aan tafel, met een Framework-laptop" />
         </section>
       </section>
 
@@ -143,7 +139,6 @@
                 <span class="score-badge" id="valuesProgress">0/8</span>
               </div>
               <p class="values-intro">Verken wat je keuzes betekenen voor mensen en voor de uitvoering. Het rapport brengt de afwegingen en mogelijke vervolgstappen samen. Wettelijke verplichtingen blijven het uitgangspunt.</p>
-              <p id="valuesMigration" class="phase-note" hidden></p>
               <nav id="valueNavigation" class="chip-row" aria-label="Kies een afweging"></nav>
               <div id="valueCard" class="value-card"></div>
               <p id="valuesSummary" class="phase-note" aria-live="polite"></p>
@@ -199,7 +194,7 @@
                   <li>Doe dit bij voorkeur met burgers die de dienstverlening gebruiken. Vraag wat zij ervaren en om een voorbeeld: wat gaat goed, waar lopen zij vast en welke hulp hebben zij nodig?</li>
                   <li>Vul op basis van dat gesprek per uitspraak in wat goed, deels of nog niet geregeld is. Gebruik de uitkomst om verbeteringen te bespreken en herhaal de vragen na een aanpassing.</li>
                 </ol>
-                <p>Bij inkoop of een aanbesteding kun je de vragen gebruiken bij een demonstratie of proef met een leverancier. Bij een bestaande toepassing bespreek je echte gebruikservaringen. Vul je dit voorlopig alleen met collega's in, behandel de antwoorden dan als aannames die je nog met burgers moet toetsen. De uitkomst is een gespreksstart, geen representatief burgeronderzoek.</p>
+                <p>Bij inkoop of een aanbesteding kun je de vragen gebruiken bij een demonstratie of proef met een leverancier. Bij een bestaande toepassing bespreek je echte gebruikservaringen. Vul je dit voorlopig alleen met collega's in, behandel de antwoorden dan als aannames die je nog met burgers moet toetsen.</p>
               </div>
               <div id="surveyGrid" class="question-list"></div>
 
@@ -253,49 +248,20 @@
         </div>
         <button class="small-button" id="returnToValues" type="button" hidden>← Terug naar mijn afweging</button>
         <div id="valueKnowledge" class="value-knowledge"></div>
-        <div class="info-grid">
-          <article>
-            <h2>AI Act in gewone taal</h2>
-            <p>Wat betekent high-risk, verboden praktijk, GPAI en menselijk toezicht voor een project binnen de publieke dienstverlening?</p>
-          </article>
-          <article>
-            <h2>Menselijke maat</h2>
-            <p>Hoe vertaal je waardigheid, contact, proportionaliteit en begrijpelijkheid naar ontwerp- en proceskeuzes?</p>
-          </article>
-          <article>
-            <h2>Tooltips in de beslisboom</h2>
-            <p>Begrippen zoals social scoring, DPIA en biometrie krijgen uitleg precies op het moment dat ze opduiken.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="tools" class="view info-view" aria-labelledby="toolsTitle">
-        <div class="info-hero">
-          <div>
-            <p class="kicker">Inspiratiebibliotheek</p>
-            <h1 id="toolsTitle">Werkvormen</h1>
-            <p>De verkenner combineert meerdere methodes. Sommige werken al statisch; andere vragen later een backend.</p>
-          </div>
-          <img src="assets/toolbox.png" alt="Illustratie van een gereedschapskist" />
-        </div>
-        <div class="info-grid">
-          <article>
-            <h2>Beslisboom</h2>
-            <p>Een gestructureerde route langs EU-regels, menselijke maat en uitvoeringsvragen.</p>
-          </article>
-          <article>
-            <h2>Waardenafweging</h2>
-            <p>Acht afwegingen maken zichtbaar welke waarden je voorrang geeft, wie gevolgen kan ervaren en welke vervolgstap nodig is.</p>
-          </article>
-          <article>
-            <h2>Praktijkcasussen</h2>
-            <p>Ongeziene burgers maken abstracte risico's bespreekbaar in teamgesprekken.</p>
-          </article>
-          <article>
-            <h2>LLM en chatbot</h2>
-            <p>Toekomstmodules voor documentanalyse en burgerinterviews, pas na validatie en backend-inrichting.</p>
-          </article>
-        </div>
+        <section class="dfv-explanation" aria-labelledby="dfvTitle">
+          <h2 id="dfvTitle">Ontwerpen vanuit waarden: Design for Values</h2>
+          <p>Design for Values (DfV) neemt waarden vanaf het begin mee in het ontwerp van technologie en dienstverlening. Je onderzoekt met betrokkenen wat belangrijk is, maakt spanningen tussen waarden bespreekbaar en vertaalt die naar concrete keuzes. Daarna toets je of de gekozen aanpak in de praktijk werkt en stel je die zo nodig bij. <a href="https://research.tudelft.nl/en/publications/design-for-values-2/" target="_blank" rel="noopener noreferrer">Lees meer over Design for Values bij TU Delft.</a></p>
+          <h3>Hoe lees je de waardenhiërarchie van de menselijke maat?</h3>
+          <p>De hiërarchie verbindt een abstract uitgangspunt aan de inrichting van een proces. De drie niveaus maken de redenering zichtbaar; ze geven geen rangorde aan tussen de vier normen.</p>
+          <ol class="hierarchy-levels">
+            <li><strong>Waarde — wat vinden we belangrijk?</strong><p>Menselijke maat: een rechtvaardig proces dat mensen begrijpt en waarin mensen de gang van zaken en de uitkomst kunnen begrijpen.</p></li>
+            <li><strong>Normen — wat vraagt dat van de dienstverlening?</strong><p>Luisteren en bijsturen, kunnen begrijpen en betwisten, aansluiten op de leefwereld en eenvoud bewaren. Samen geven deze vier normen invulling aan de menselijke maat.</p></li>
+            <li><strong>Ontwerpkeuzes — hoe richten we het concreet in?</strong><p>Denk aan invloed van burgers op het ontwerp, een zichtbare route naar menselijke herbeoordeling, passende ondersteuning en minder bewijsstukken. De juiste invulling hangt af van de situatie.</p></li>
+          </ol>
+          <p>Deze vertaling van waarden via normen naar concrete ontwerpkeuzes is gebaseerd op de <a href="https://ocw.tudelft.nl/courses/responsible-innovation/subjects/7-value-sensitive-design/" target="_blank" rel="noopener noreferrer">waardenhiërarchie zoals toegelicht door TU Delft</a>. De vier normen hierboven vormen de uitwerking voor deze verkenner.</p>
+          <div class="dfv-example"><h3>Een voorbeeld: een besluit laten herzien</h3><p>Vanuit de waarde menselijke maat volgt de norm dat iemand een uitkomst moet kunnen begrijpen en betwisten. Een mogelijke ontwerpkeuze is daarom een herkenbare knop voor menselijke herbeoordeling, met een begrijpelijke toelichting en een bereikbaar aanspreekpunt.</p><p>Die keuze is pas bruikbaar als mensen de route vinden en kunnen doorlopen. Bespreek dit met burgers en medewerkers en pas de inrichting aan op basis van hun ervaringen.</p></div>
+          <p>De acht afwegingen helpen om spanningen tussen de normen te bespreken. Meer ruimte voor uitzonderingen kan bijvoorbeeld beter aansluiten op iemands situatie, maar ook een ingewikkelder proces opleveren. Leg daarom vast welke ontwerpkeuze je maakt, waarom en hoe je de werking ervan gaat toetsen.</p>
+        </section>
       </section>
     </main>
 
