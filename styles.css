@@ -244,6 +244,18 @@ li {
   color: #17342a;
 }
 
+.hero-buttons .knowledge-button {
+  justify-self: start;
+  background: var(--green-100);
+  color: var(--green-700);
+  border: 1px solid #d2dfcf;
+  font-size: 1rem;
+}
+
+.hero-buttons .knowledge-button:hover {
+  background: #dce8d9;
+}
+
 .how-section {
   padding: 3rem 0 2rem;
   text-align: center;
@@ -396,6 +408,10 @@ li {
 
 .phase-heading p {
   color: var(--muted);
+}
+
+.phase h2, .phase h3, .phase-tab {
+  overflow-wrap: anywhere;
 }
 
 .progress-ring,
@@ -694,16 +710,12 @@ textarea {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.values-intro, .value-example {
-  padding: 0.9rem 1rem;
-  border-left: 3px solid var(--leaf);
-  background: var(--green-100);
-}
+.value-example { color: var(--muted); }
 
 .tool-shell > *, .phase-heading > div { min-width: 0; }
 .score-badge { flex-shrink: 0; }
-.value-card { margin-top: 1.5rem; }
-.value-card h3 { font-size: 1.45rem; line-height: 1.35; }
+.value-card { margin-top: 1rem; }
+.value-card h3 { line-height: 1.4; }
 .value-scale { border: 0; padding: 0; margin: 1.5rem 0; min-width: 0; }
 .value-scale legend, .value-note-label { font-weight: 900; margin-bottom: 0.6rem; }
 .scale-poles { display: flex; justify-content: space-between; gap: 2rem; color: var(--green-900); }
@@ -716,8 +728,8 @@ textarea {
 .scale-ticks span:last-child { text-align: right; }
 #sliderChoice { display: block; font-weight: 900; color: var(--green-900); margin-top: 0.75rem; }
 .muted-note { font-size: 0.88rem; color: #52645b; }
-.survey-guide { background: var(--green-100); padding: 1.2rem; border-radius: 8px; margin-bottom: 1.5rem; }
-.survey-guide h3 { line-height: 1.4; }
+.survey-guide { border: 1px solid var(--line); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+.survey-guide summary { cursor: pointer; color: var(--green-900); font-weight: 900; line-height: 1.4; }
 .survey-guide ol { padding-left: 1.4rem; }
 .survey-guide li { margin-bottom: 0.65rem; }
 .delivery-options { display: grid; gap: 0.75rem; border: 1px solid var(--line); padding: 1rem; margin: 1rem 0; }
@@ -749,6 +761,7 @@ textarea {
 .dfv-example h3 { margin-top: 0; }
 .value-consequence { background: var(--sand); padding: 1rem; border-radius: 8px; margin: 1rem 0; }
 .value-consequence p { margin-bottom: 0; }
+.value-card .value-consequence { background: none; border-top: 1px solid var(--line); border-radius: 0; padding: 1rem 0 0; }
 .value-note-label { display: block; line-height: 1.5; }
 .value-note-label span { font-weight: 400; }
 .value-links { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
@@ -799,12 +812,11 @@ button:disabled { opacity: 0.5; cursor: default; }
 
   .phase-sidebar {
     position: static;
-    display: flex;
-    overflow-x: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .phase-tab {
-    min-width: 12rem;
+    min-width: 0;
   }
 }
 

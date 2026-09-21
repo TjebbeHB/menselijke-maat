@@ -88,17 +88,6 @@ const SCORE_OPTIONS = [
 
 const VIGNETTES = [
   {
-    id: "neurodivergence",
-    label: "Neurodivergentie",
-    title: "Burger die informatie anders verwerkt",
-    scenario: "Een neurodivergente burger raakt overbelast door veel prikkels, onduidelijke instructies of onverwachte veranderingen. Wat helpt verschilt per persoon; ga daarover in gesprek.",
-    prompts: [
-      "Kan iemand de route in eigen tempo doorlopen, pauzeren en hervatten?",
-      "Zijn instructies concreet en voorspelbaar, zonder onnodige prikkels?",
-      "Kan iemand passende ondersteuning of een andere contactvorm kiezen zonder een diagnose te moeten delen?"
-    ]
-  },
-  {
     id: "stress",
     label: "Schuldenstress",
     title: "Alleenstaande ouder met schuldenstress",
@@ -145,6 +134,17 @@ const VIGNETTES = [
       "Op welke momenten moeten medewerkers kunnen afwijken?",
       "Welke signalen tonen dat medewerkers te veel op AI gaan leunen?",
     ],
+  },
+  {
+    id: "neurodivergence",
+    label: "Neurodivergentie",
+    title: "Burger die informatie anders verwerkt",
+    scenario: "Een neurodivergente burger raakt overbelast door veel prikkels, onduidelijke instructies of onverwachte veranderingen. Wat helpt verschilt per persoon; ga daarover in gesprek.",
+    prompts: [
+      "Kan iemand de route in eigen tempo doorlopen, pauzeren en hervatten?",
+      "Zijn instructies concreet en voorspelbaar, zonder onnodige prikkels?",
+      "Kan iemand passende ondersteuning of een andere contactvorm kiezen zonder een diagnose te moeten delen?"
+    ]
   },
 ];
 

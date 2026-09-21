@@ -36,6 +36,12 @@ async function main() {
     page.on('pageerror', (error) => errors.push(error.message));
     const url = `http://127.0.0.1:${server.address().port}/`;
     await page.goto(url);
+    fs.mkdirSync(path.join(root, 'test-results'), { recursive: true });
+    assert.equal(await page.locator('.hero-buttons button').first().getAttribute('data-start-tool'), '');
+    const mainButton = await page.locator('.hero-buttons [data-start-tool]').boundingBox();
+    const knowledgeButton = await page.locator('.knowledge-button').boundingBox();
+    assert.ok(knowledgeButton.y > mainButton.y && knowledgeButton.width < mainButton.width && knowledgeButton.height < mainButton.height);
+    await page.screenshot({ path: path.join(root, 'test-results/home-desktop.png'), fullPage: true });
     await page.locator('[data-start-tool]').first().click();
     await page.locator('[data-phase-link="values"]').click();
     assert.equal(await page.locator('#sliderChoice').textContent(), 'Nog open');
@@ -55,6 +61,9 @@ async function main() {
     await page.locator('[data-open-knowledge]').click();
     assert.equal(await page.locator('#knowledge').isVisible(), true);
     assert.equal(await page.locator('#waarde-eenvoud').isVisible(), true);
+    assert.equal(await page.locator('.hierarchy h2').textContent(), 'Menselijke maat in het ontwerp');
+    assert.equal(await page.locator('.hierarchy > p').count(), 0);
+    assert.doesNotMatch(await page.locator('#knowledge').textContent(), /tussentijdsrapport|ontwerpmaatregelen/);
     await page.locator('#returnToValues').click();
     assert.equal(await page.locator('#valueNote').inputValue(), note);
     await page.reload();
@@ -82,6 +91,33 @@ async function main() {
     }
     await page.locator('[data-value-index="6"]').click();
     await page.locator('[name="delivery-mode"][value="adapt"]').check();
+    // Original case discussions and citizen questions remain reachable and retain answers.
+    await page.locator('[data-phase="values"] [data-next-phase]').click();
+    assert.equal(await page.locator('[data-phase-link="vignettes"]').textContent(), '3. Worst-case users');
+    assert.equal(await page.locator('[data-phase="vignettes"]').isVisible(), true);
+    assert.deepEqual(await page.locator('[data-vignette]').allTextContents(), ['Schuldenstress', 'Mantelzorger', 'Taalbarrière', 'Medewerker', 'Neurodivergentie']);
+    assert.equal(await page.locator('#vignetteName').textContent(), 'Alleenstaande ouder met schuldenstress');
+    await page.locator('[data-status="redesign"]').click();
+    await page.locator('#vignetteNotes').fill('Persoonlijke hulp bij ontbrekende bewijsstukken.');
+    await page.locator('[data-vignette="neurodivergence"]').click();
+    await page.locator('[data-status="done"]').click();
+    await page.locator('#vignetteNotes').fill('Pauzeren en hervatten mogelijk maken.');
+    await page.locator('[data-vignette="stress"]').click();
+    assert.equal(await page.locator('#vignetteNotes').inputValue(), 'Persoonlijke hulp bij ontbrekende bewijsstukken.');
+    await page.locator('[data-phase="vignettes"] [data-next-phase]').click();
+    assert.equal(await page.locator('#surveyGrid .row-question').count(), 4);
+    assert.equal(await page.locator('.survey-guide').evaluate((el) => el.open), false);
+    await page.locator('.survey-guide summary').click();
+    assert.equal(await page.locator('.survey-guide ol').isVisible(), true);
+    await page.locator('.survey-guide summary').click();
+    const surveyAnswers = { understand: 'good', human: 'missing', fair: 'partial', effort: 'good' };
+    for (const [id, answer] of Object.entries(surveyAnswers)) {
+      await page.locator(`[data-survey="${id}"][data-value="${answer}"]`).click();
+    }
+    await page.reload();
+    assert.deepEqual(await page.evaluate(() => state.survey), surveyAnswers);
+    assert.equal(await page.evaluate(() => state.vignetteStatus.stress), 'redesign');
+    assert.equal(await page.evaluate(() => state.vignetteStatus.neurodivergence), 'done');
     await page.locator('[data-phase-link="report"]').click();
     assert.match(await page.locator('#reportPreview').textContent(), /8\/8 keuzes vastgelegd/);
     assert.equal(await page.locator('#reportPreview img').count(), 0);
@@ -92,6 +128,9 @@ async function main() {
     assert.match(markdown, /Aandachtsprofiel/);
     assert.match(markdown, /aandachtsprofiel-2/);
     assert.match(markdown, /Bestaande oplossing aanpassen/);
+    assert.ok(markdown.includes('Persoonlijke hulp bij ontbrekende bewijsstukken\\.'));
+    assert.ok(markdown.includes('Pauzeren en hervatten mogelijk maken\\.'));
+    assert.match(markdown, /Ik kan een mens bereiken als ik vastloop\. \| Nog niet/);
     assert.match(markdown, /&lt;img/);
     assert.match(markdown, /hulp \\\| minder stappen/);
     for (const item of model.values) assert.ok(markdown.includes(`#waarde-${item.id}`));
@@ -100,11 +139,25 @@ async function main() {
     // Check narrow layout, then save review images locally (not in the published site).
     fs.mkdirSync(path.join(root, 'test-results'), { recursive: true });
     await page.screenshot({ path: path.join(root, 'test-results/report-desktop.png'), fullPage: true });
+    for (const phase of ['vignettes', 'citizens']) {
+      await page.locator(`[data-phase-link="${phase}"]`).click();
+      await page.screenshot({ path: path.join(root, `test-results/${phase}-desktop.png`), fullPage: true });
+    }
     await page.locator('[data-phase-link="values"]').click();
     await page.locator('[data-value-index="0"]').click();
     await page.screenshot({ path: path.join(root, 'test-results/slider-desktop.png'), fullPage: true });
-    await page.setViewportSize({ width: 390, height: 844 });
-    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    for (const width of [320, 768, 390]) {
+      await page.setViewportSize({ width, height: 844 });
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true,
+        JSON.stringify(await page.evaluate(() => [...document.querySelectorAll('body *')].filter((el) => el.getBoundingClientRect().right > innerWidth).map((el) => ({ tag: el.tagName, id: el.id, class: el.className, right: el.getBoundingClientRect().right })))));
+      assert.equal(await page.locator('.phase-sidebar').evaluate((el) => el.scrollWidth <= el.clientWidth), true);
+      for (const phase of ['values', 'vignettes', 'citizens']) {
+        await page.locator(`[data-phase-link="${phase}"]`).click();
+        assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+        if (width === 390) await page.screenshot({ path: path.join(root, `test-results/${phase}-mobile.png`), fullPage: true });
+      }
+    }
+    await page.locator('[data-phase-link="values"]').click();
     await page.screenshot({ path: path.join(root, 'test-results/slider-mobile.png'), fullPage: true });
     await page.locator('#clearValue').click();
     assert.equal(await page.evaluate(() => state.valueChoices.eenvoud), undefined);
@@ -140,7 +193,7 @@ async function main() {
     await page.reload();
     assert.equal(await page.locator('#knowledge').isVisible(), true);
     assert.deepEqual(errors, []);
-    console.log('Geslaagd: vier standen, 32 puntenscenario’s, verborgen invulpunten, opslag, kennisbank, verslag, migratie en mobiele weergave.');
+    console.log('Geslaagd: vier standen, 32 puntenscenario’s, worst-case users, burgerperspectief, opslag, kennisbank, verslag, migratie en drie mobiele schermbreedtes.');
   } finally {
     if (browser) await browser.close();
     await new Promise((resolve) => server.close(resolve));
