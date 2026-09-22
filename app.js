@@ -79,10 +79,10 @@ const SCORE_OPTIONS = [
 const VIGNETTES = [
   {
     id: "stress",
-    label: "Schuldenstress",
-    title: "Alleenstaande ouder met schuldenstress",
+    label: "Stress",
+    title: "Overbelaste burger",
     scenario:
-      "De burger moet meerdere bewijsstukken aanleveren, begrijpt de brief niet goed en stopt zodra een formulier terugkomt met fouten.",
+      "Bijvoorbeeld een alleenstaande ouder met schuldenstress. Deze ouder heeft mogelijk niet de kunde, kennis of tijd om het proces makkelijk te doorlopen en haakt snel af omdat er veel andere zaken spelen.",
     prompts: [
       "Waar wordt dit proces voor deze burger slechter dan nu?",
       "Wanneer moet een medewerker actief contact opnemen?",
