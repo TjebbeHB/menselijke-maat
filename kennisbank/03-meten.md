@@ -33,4 +33,4 @@ Je geeft ervaringen en professioneel oordeel meer ruimte. Het is dan moeilijker 
 
 ## Aandachtspunt
 
-Gebruik geen totaalcijfer als bewijs dat de menselijke maat op orde is.
+Als er te hard gekeken wordt naar een meting dan schiet deze diens doel voorbij. Houdt oog op waar het om draait. Een meting kan helpen maar niet de menselijke maat vervangen.
