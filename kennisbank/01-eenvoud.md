@@ -12,7 +12,7 @@ Een korte route geeft overzicht. Extra uitzonderingen kunnen nodig zijn om passe
 
 ## Voorbeeld
 
-Een aanvraag heeft weinig vragen. Iemand met wisselende inkomsten kan daardoor de eigen situatie niet kwijt en ziet af van een aanvraag.
+Een aanvraag heeft weinig vragen. Iemand met wisselende inkomsten kan daardoor de eigen situatie niet goed kwijt in de regeling en ziet af van een aanvraag.
 
 ## Meer nadruk op links
 
@@ -24,7 +24,7 @@ Je combineert een korte basisroute met zichtbare hulp voor uitzonderingen. Dat h
 
 ## Meer nadruk op rechts
 
-Je biedt meer ruimte voor bijzondere omstandigheden. Dat kan passende hulp verbeteren, maar ook meer vragen, bewijsstukken en onzekerheid opleveren.
+Je biedt meer ruimte voor bijzondere omstandigheden. Dat kan passende hulp verbeteren, maar ook meer vragen, bewijsstukken en onzekerheid opleveren voor burgers.
 
 ## Mogelijke uitwerkingen
 
@@ -33,4 +33,4 @@ Je biedt meer ruimte voor bijzondere omstandigheden. Dat kan passende hulp verbe
 
 ## Aandachtspunt
 
-Laat vereenvoudiging niet betekenen dat iemand de eigen situatie nergens kan laten beoordelen.
+Vereenvoudiging moet dienen voor de burger. Een eenvoudig systeem kan namelijk bijvoorbeeld veel bewijslast leggen bij de burger.
