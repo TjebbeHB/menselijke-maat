@@ -33,5 +33,5 @@ Je geeft persoonlijke omstandigheden veel gewicht. Dat kan beter aansluiten, maa
 
 ## Aandachtspunt
 
-Een afwijking vraagt een uitlegbare reden; een standaardregel vraagt aandacht voor ongelijke gevolgen.
+Afwijkingen kunnen oneerlijk voelen voor burgers, maar ook juist begrip geven. Een standaardregel waar te strict aan gehouden wordt kan juist onmenselijk voelen.
 
