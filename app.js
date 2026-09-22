@@ -59,16 +59,6 @@ const EU_QUESTIONS = [
     ],
   },
   {
-    id: "supplier",
-    title: "Wie levert of beheert de AI?",
-    help: "Leveranciersafhankelijkheid bepaalt welke afspraken je nodig hebt.",
-    options: [
-      ["inhouse", "Eigen organisatie", "Beheer ligt vooral intern."],
-      ["hybrid", "Hybride", "Eigen proces met externe model- of softwarecomponent."],
-      ["vendor", "Leverancier", "Een externe partij levert een groot deel van de oplossing."],
-    ],
-  },
-  {
     id: "procurement",
     title: "Zijn afspraken over AI al vastgelegd?",
     help: "Denk aan logging, auditrechten, modelwijzigingen, incidenten, data en uitleg.",
