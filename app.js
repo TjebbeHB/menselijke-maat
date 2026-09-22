@@ -855,11 +855,6 @@ ${tableRows(SURVEY, state.survey)}
 
 ${recommendations.map((item, index) => `${index + 1}. ${item}`).join("\n")}
 
-## 8. Toekomstmodules
-
-- LLM-documentassessment: vraagt backend, validatieset, logging, promptbeheer en menselijke review.
-- Chatbot-interview: vraagt consent, sessiebeheer, opslagbeleid, moderatie en escalatie naar een mens.
-
 Gegenereerd op ${new Date().toLocaleString("nl-NL")}.
 `;
 }
