@@ -95,8 +95,8 @@ async function main() {
     await page.locator('[data-phase="values"] [data-next-phase]').click();
     assert.equal(await page.locator('[data-phase-link="vignettes"]').textContent(), '3. Worst-case users');
     assert.equal(await page.locator('[data-phase="vignettes"]').isVisible(), true);
-    assert.deepEqual(await page.locator('[data-vignette]').allTextContents(), ['Schuldenstress', 'Mantelzorger', 'Taalbarrière', 'Medewerker', 'Neurodivergentie']);
-    assert.equal(await page.locator('#vignetteName').textContent(), 'Alleenstaande ouder met schuldenstress');
+    assert.deepEqual(await page.locator('[data-vignette]').allTextContents(), ['stress', 'Mantelzorger', 'Taalbarrière', 'Medewerker', 'Neurodivergentie']);
+    assert.equal(await page.locator('#vignetteName').textContent(), 'Overbelaste burger');
     await page.locator('[data-status="redesign"]').click();
     await page.locator('#vignetteNotes').fill('Persoonlijke hulp bij ontbrekende bewijsstukken.');
     await page.locator('[data-vignette="neurodivergence"]').click();
